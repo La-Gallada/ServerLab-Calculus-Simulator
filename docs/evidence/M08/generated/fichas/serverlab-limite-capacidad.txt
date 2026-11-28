@@ -1,0 +1,19 @@
+Título: Límite del tiempo de respuesta cuando la carga se aproxima a la capacidad por la izquierda
+Descripción: Crecimiento sin cota de R(n) cuando la carga se aproxima a la capacidad con valores menores.
+Variables y unidades:
+- n: usuarios concurrentes (usuarios)
+- R(n): tiempo de respuesta (ms)
+Parámetros utilizados:
+- Caso de límite: n → 100⁻ (por la izquierda)
+- Distancia seleccionada: 0,1
+Dominio: Extensión continua 0 ≤ n < 100; la operación usa enteros de 0 a 99. n = 100 no se evalúa.
+Modelo matemático:
+- R(n) = 100 + 200n/(100 − n), con 0 ≤ n < 100 (ms)
+- lím n→100⁻ R(n) = +∞ (no es un valor; n = 100 no pertenece al dominio)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Eje horizontal lineal y eje vertical logarítmico de base 10.
+Resumen: Entre n = 80 y n = 99,99, R(n) pasa de 900 a 1 999 900 ms y crece sin cota. El usuario 100 no se evalúa.
+
+Nota. Elaboración propia mediante ServerLab, a partir del modelo matemático hipotético utilizado en el Proyecto de Investigación #4 de Cálculo I.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

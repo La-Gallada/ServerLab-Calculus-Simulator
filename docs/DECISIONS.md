@@ -42,3 +42,9 @@
 | D-07-06 | Escribir evidencia versionada sólo cuando `EVIDENCE` nombre el hito.                                 | adoptada  | Evita sobrescribir capturas históricas.                                                   |
 | D-V-01  | Autorizar commits locales al cerrar cada milestone; push, merge y despliegue requieren autorización. | adoptada  | Instrucción del propietario del 27-11-2026; sustituye la prohibición anterior de commits. |
 | D-V-02  | Consolidar M00–M07 en un solo commit sin fabricar historia retrospectiva.                            | adoptada  | Esos hitos no se versionaron individualmente; ver 5e41c7f.                                |
+| D-08-01 | Renderizar SVG propio desde definiciones tipadas, sin clonar Recharts.                               | adoptada  | Figuras autónomas, deterministas e iguales en vista previa y archivo.                     |
+| D-08-02 | Rasterizar con Image y Canvas al tamaño final; no declarar DPI.                                      | adoptada  | Sin dependencias; sólo se garantizan píxeles reales.                                      |
+| D-08-03 | CSV UTF-8 con BOM en variantes estándar y regional.                                                  | adoptada  | Intercambio de datos y Excel en español.                                                  |
+| D-08-04 | Cargar el generador de forma diferida.                                                               | adoptada  | Limita el crecimiento del bundle principal.                                               |
+| D-08-05 | Paquete ZIP «store» propio.                                                                          | adoptada  | Evita dependencias y múltiples descargas.                                                 |
+| D-08-06 | Sustituye la estrategia D-01-04 en lo relativo a clonar gráficas; conserva las Web APIs.             | adoptada  | Ver D-08-01 y D-08-02.                                                                    |

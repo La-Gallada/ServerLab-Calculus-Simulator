@@ -8,7 +8,6 @@ import { mathModelConfig } from '../../config/model';
 import { formatters, responseTime } from '../../math';
 import { useSimulation } from '../../state/useSimulation';
 import { CapacityChart } from './CapacityChart';
-import { niceCeiling } from './chartTheme';
 import { FigureLegend } from './FigureLegend';
 import {
   buildCapacityFigure,
@@ -16,7 +15,8 @@ import {
   buildVerificationFigure,
   optimizationScenarios,
   solveThreshold,
-  type ResponseFigure,
+  responseCeiling,
+  type ResponseScale,
 } from './optimizationFigures';
 import { approx, equation, formatNumber, users } from './optimizationFormat';
 import { scenarioThresholdsMs, thresholdRange } from './optimizationInput';
@@ -26,8 +26,7 @@ import { ResponseRegionChart } from './ResponseRegionChart';
 import { ScenarioApplication } from './ScenarioApplication';
 import { ThresholdField } from './ThresholdField';
 import { VerificationChart } from './VerificationChart';
-
-type View = 'focus' | 'full';
+import { ExportButton } from '../exports/ExportButton';
 
 function Metric({
   label,
@@ -49,24 +48,12 @@ function Metric({
   );
 }
 
-/** Máximo del eje Y: la vista enfocada prioriza la intersección con el umbral. */
-function axisCeiling(figure: ResponseFigure, view: View, highestMs: number) {
-  const { thresholdMs } = figure.parameters;
-  const { solution } = figure;
-  const base = mathModelConfig.response.baseResponseMs;
-  if (view === 'full') return niceCeiling(Math.max(highestMs, thresholdMs) * 1.05);
-  if (solution.kind === 'feasible' && solution.responseAtNextUserMs === undefined)
-    return niceCeiling(Math.max(thresholdMs, solution.responseAtMaximumMs) * 1.15);
-  const next = solution.kind === 'feasible' ? (solution.responseAtNextUserMs ?? 0) : 0;
-  return niceCeiling(Math.max(thresholdMs * 1.6, Math.min(next, thresholdMs * 3) * 1.2, base * 5));
-}
-
 export function OptimizationLab() {
   const { input } = useSimulation();
   // Estado local: parte de los valores del Dashboard y nunca los modifica.
   const entry = { thresholdMs: input.thresholdMs, users: input.concurrentUsers };
   const [analysis, setAnalysis] = useState(entry);
-  const [view, setView] = useState<View>('focus');
+  const [view, setView] = useState<ResponseScale>('focus');
   /** Cambia cuando el umbral llega por otra vía y descarta el borrador del campo. */
   const [revision, setRevision] = useState(0);
   const { thresholdMs, users: load } = analysis;
@@ -101,7 +88,7 @@ export function OptimizationLab() {
   const maximum = feasible?.maximumIntegerUsers;
   const userMargin = maximum === undefined ? null : maximum - load;
   const timeMargin = thresholdMs - currentMs;
-  const ceiling = axisCeiling(figure, view, highest.value);
+  const ceiling = responseCeiling(figure, view, highest.value);
 
   const status = !feasible
     ? 'No hay solución factible'
@@ -276,6 +263,11 @@ export function OptimizationLab() {
               = {capacity}. Modelo {figure.model.id}, versión {figure.model.version}.
             </figcaption>
           </figure>
+          <ExportButton
+            figureId={figure.id}
+            values={{ threshold: thresholdMs, users: load, view }}
+            label="Exportar gráfica principal"
+          />
         </Card>
 
         <Card className="opt-controls">
@@ -426,6 +418,11 @@ export function OptimizationLab() {
               el umbral de {threshold}.
             </p>
           )}
+          <ExportButton
+            figureId="optimization-integer-verification"
+            values={{ threshold: thresholdMs }}
+            label="Exportar verificación entera"
+          />
         </Card>
 
         <Card className="opt-chart-card">
@@ -448,6 +445,11 @@ export function OptimizationLab() {
                 ' El umbral seleccionado queda a la izquierda de la vista.'}
             </figcaption>
           </figure>
+          <ExportButton
+            figureId={capacityFigure.value.id}
+            values={{ threshold: thresholdMs }}
+            label="Exportar sensibilidad"
+          />
         </Card>
       </section>
 
@@ -519,6 +521,7 @@ export function OptimizationLab() {
             figureId={scenario.id}
             thresholdMs={scenario.thresholdMs}
             compareWithMs={index === 0 ? undefined : optimizationScenarios[0].thresholdMs}
+            load={load}
             isLoaded={thresholdMs === scenario.thresholdMs}
             onLoad={() => setThreshold(scenario.thresholdMs)}
           />

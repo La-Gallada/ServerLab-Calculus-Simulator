@@ -1,5 +1,13 @@
 import type { LucideIcon } from 'lucide-react';
-import { Gauge, Infinity as InfinityIcon, Sigma, Target, TrendingUp, Info } from 'lucide-react';
+import {
+  Download,
+  Gauge,
+  Infinity as InfinityIcon,
+  Sigma,
+  Target,
+  TrendingUp,
+  Info,
+} from 'lucide-react';
 
 export type DevelopmentStatus = 'Base preparada' | 'Planificado';
 
@@ -60,6 +68,14 @@ export const pages: AppPage[] = [
     status: 'Planificado',
     icon: Target,
     assetPath: '/assets/icons/icon-optimization.png',
+  },
+  {
+    path: '/exportaciones',
+    title: 'Exportaciones',
+    navigationLabel: 'Exportaciones',
+    description: 'Catálogo de figuras académicas descargables como PNG, SVG o CSV.',
+    status: 'Base preparada',
+    icon: Download,
   },
   {
     path: '/acerca',

@@ -1,0 +1,19 @@
+Título: Primera derivada del tiempo de respuesta, R′(n)
+Descripción: Tasa instantánea de cambio del tiempo de respuesta respecto a la carga.
+Variables y unidades:
+- n: usuarios concurrentes (usuarios)
+- R′(n): tasa de cambio de R (ms/usuario)
+Parámetros utilizados:
+- Punto marcado: 65 usuarios
+- Escala: logarítmica
+Dominio: Extensión continua 0 ≤ n < 100; la operación usa enteros de 0 a 99. n = 100 no se evalúa.
+Modelo matemático:
+- R(n) = 100 + 200n/(100 − n), con 0 ≤ n < 100 (ms)
+- R′(n) = (200 · 100)/(100 − n)² (ms/usuario)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Eje horizontal lineal y eje vertical logarítmico de base 10.
+Resumen: R′(n) crece de 2 a 20 000 ms/usuario entre 0 y 99 usuarios.
+
+Nota. Elaboración propia mediante ServerLab, a partir del modelo matemático hipotético utilizado en el Proyecto de Investigación #4 de Cálculo I.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

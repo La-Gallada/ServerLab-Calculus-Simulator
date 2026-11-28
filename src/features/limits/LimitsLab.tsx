@@ -12,6 +12,8 @@ import {
 } from '../../math';
 import { mathModelConfig } from '../../config/model';
 import { Card } from '../../components/ui/Card';
+import { limitDistances as distances, limitWindow, type LimitCase } from './limitCases';
+import { ExportButton } from '../exports/ExportButton';
 import {
   CartesianGrid,
   Legend,
@@ -23,10 +25,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
-type LimitCase = 'zero' | 'capacity';
-
-const distances = [10, 5, 1, 0.5, 0.1, 0.01] as const;
 
 const formatContinuous = (value: number, maximumFractionDigits = 4) =>
   new Intl.NumberFormat('es-CR', { maximumFractionDigits }).format(value);
@@ -65,11 +63,10 @@ export function LimitsLab() {
   );
   const selected = tableRows.find((row) => row.distance === selectedDistance) ?? tableRows[0];
   const curve = useMemo(() => {
-    const result = isZero
-      ? responseCurve(0, 15, 100)
-      : responseCurve(capacity - 20, capacity - 0.01, 160);
+    const { start, end, steps } = limitWindow(caseId);
+    const result = responseCurve(start, end, steps);
     return result.ok ? result.value : [];
-  }, [capacity, isZero]);
+  }, [caseId]);
   const formula = `R(n) = ${base} + \\frac{${coefficient}n}{${capacity}-n}`;
   const limitFormula = isZero
     ? `\\lim_{n \\to 0^+} R(n) = ${base}\\,\\mathrm{ms}`
@@ -244,6 +241,11 @@ export function LimitsLab() {
               ? 'La escala lineal permite observar el acercamiento a 100 ms.'
               : 'La escala logarítmica permite comparar valores muy grandes cerca de la asíntota sin alterar los datos.'}
           </p>
+          <ExportButton
+            figureId={isZero ? 'limits-zero-approach' : 'limits-capacity-approach'}
+            values={{ distance: selectedDistance }}
+            label="Exportar gráfica principal"
+          />
         </Card>
 
         <Card className="approach-card">

@@ -21,6 +21,7 @@ import {
   resultTex,
 } from './integralTex';
 import { LimitControl } from './LimitControl';
+import { ExportButton } from '../exports/ExportButton';
 
 const referenceTimes = [0, 5, 10, 15, 20, 25, 30] as const;
 
@@ -204,6 +205,11 @@ export function IntegralsLab() {
               Modelo {figure.value.model.id}, versión {figure.value.model.version}.
             </figcaption>
           </figure>
+          <ExportButton
+            figureId={figure.value.id}
+            values={{ a, b }}
+            label="Exportar gráfica principal"
+          />
         </Card>
 
         <Card className="interval-card">

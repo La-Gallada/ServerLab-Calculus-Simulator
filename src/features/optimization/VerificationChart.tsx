@@ -8,21 +8,14 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-import { axisColor, gridColor, niceCeiling, tickStyle } from './chartTheme';
+import { axisColor, gridColor, tickStyle } from './chartTheme';
 import { PointShape } from './chartMarks';
 import { formatNumber } from './optimizationFormat';
-import type { VerificationFigure } from './optimizationFigures';
+import { verificationTicks, type VerificationFigure } from './optimizationFigures';
 
 export function VerificationChart({ figure }: { figure: VerificationFigure }) {
   const { thresholdMs } = figure.parameters;
-  const values = [...figure.data.map((point) => point.responseMs), thresholdMs];
-  const low = Math.min(...values);
-  const high = Math.max(...values);
-  // Marcas redondas para la ampliación local.
-  const step = niceCeiling((high - low) / 4);
-  const bottom = Math.floor(low / step) * step;
-  const intervals = Math.ceil((high - bottom) / step);
-  const yTicks = Array.from({ length: intervals + 1 }, (_, index) => bottom + step * index);
+  const yTicks = verificationTicks(figure);
   const first = figure.data[0].users;
   const last = figure.data[figure.data.length - 1].users;
 
@@ -46,7 +39,7 @@ export function VerificationChart({ figure }: { figure: VerificationFigure }) {
           />
           <YAxis
             type="number"
-            domain={[bottom, yTicks[yTicks.length - 1]]}
+            domain={[yTicks[0], yTicks[yTicks.length - 1]]}
             ticks={yTicks}
             width={66}
             tick={tickStyle}

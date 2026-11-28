@@ -1,0 +1,22 @@
+Título: Verificación del máximo entero para un máximo de 500 ms
+Descripción: Ampliación en torno al máximo entero y al siguiente usuario.
+Variables y unidades:
+- n: usuarios concurrentes (usuarios)
+- R(n): tiempo de respuesta (ms)
+- L: tiempo máximo permitido (ms)
+- m: máximo entero factible (usuarios)
+Parámetros utilizados:
+- Umbral L: 500 ms
+Dominio: Extensión continua 0 ≤ n < 100; la operación usa enteros de 0 a 99. n = 100 no se evalúa.
+Modelo matemático:
+- R(n) = 100 + 200n/(100 − n), con 0 ≤ n < 100 (ms)
+- Maximizar n sujeto a R(n) ≤ L, con n entero
+- Frontera continua (si L ≥ B): n* = C(L − B)/(L − B + k)
+- Máximo entero: m = mín(⌊n*⌋, C − 1)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Lineal; ampliación local, el eje vertical puede no comenzar en cero.
+Resumen: El máximo entero es 66; el usuario 67 supera el umbral.
+
+Nota. Elaboración propia mediante ServerLab, a partir del modelo matemático hipotético utilizado en el Proyecto de Investigación #4 de Cálculo I.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

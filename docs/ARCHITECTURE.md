@@ -49,7 +49,7 @@ El módulo consume `responseTime`, `responseCurve`, `limitAtZeroFromRight`, `lim
 
 ## Navegación
 
-Se usa `HashRouter` para que una futura publicación estática no dependa de reglas de reescritura del servidor. Rutas: `/`, `/limites`, `/derivadas`, `/integrales`, `/optimizacion`, `/acerca` y un fallback para rutas inexistentes.
+Se usa `HashRouter` para que una futura publicación estática no dependa de reglas de reescritura del servidor. Rutas: `/`, `/limites`, `/derivadas`, `/integrales`, `/optimizacion`, `/exportaciones`, `/acerca` y un fallback para rutas inexistentes.
 
 ## Diseño y activos
 
@@ -63,12 +63,8 @@ Los tokens CSS viven en `src/styles/index.css`: color, radios, sombras, foco, tr
 
 R(n) y la recta tangente usan escala lineal para preservar el significado de la pendiente. R′ y R″ usan una escala Y logarítmica identificada, porque ambas son positivas y crecen de forma extrema al acercarse a la capacidad. `n=100` nunca se evalúa ni se añade como punto finito.
 
-## Estrategia prevista de exportación (M08)
+## Exportación de M08
 
-1. Cada gráfica de Recharts deberá exponer un SVG autosuficiente con título, leyenda, unidades y ejes.
-2. Un adaptador de exportación clonará el SVG, inyectará fondo blanco y estilos de impresión, y definirá ancho/alto explícitos con margen suficiente para etiquetas.
-3. El SVG se serializará a `Blob`; un `canvas` con factor de escala configurable lo rasterizará a PNG de alta resolución, usando una URL local temporal y descarga iniciada por el usuario.
-4. Las mismas series y metadatos tipados alimentarán CSV y el pie de figura, evitando discrepancias entre app y exportación.
-5. Las pruebas cubrirán títulos, unidades, leyendas y dimensiones; la revisión visual comprobará que no haya recortes.
+`src/export/` es un núcleo sin React: un registro de figuras obtiene datos del motor y un único renderizador produce SVG para ambos temas; PNG, CSV y ficha derivan del mismo objeto. `src/features/exports/` aporta el centro `/exportaciones`, el diálogo de los laboratorios y los campos de parámetros. El centro y el panel se cargan de forma diferida.
 
-No se eligió una biblioteca adicional de rasterización: el enfoque Web API mantiene la app estática y usable sin servicios externos.
+La estrategia prevista (clonar el SVG de Recharts) se sustituyó por un renderizador propio. Detalle en [EXPORT-SYSTEM.md](EXPORT-SYSTEM.md).

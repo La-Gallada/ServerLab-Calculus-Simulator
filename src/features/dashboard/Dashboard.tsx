@@ -19,6 +19,8 @@ import {
 } from '../../math';
 import { mathModelConfig } from '../../config/model';
 import { useSimulation } from '../../state/useSimulation';
+import { responseViews, type ResponseView } from './responseViews';
+import { ExportButton } from '../exports/ExportButton';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Badge } from '../../components/ui/Badge';
@@ -35,8 +37,6 @@ import {
   XAxis,
   YAxis,
 } from 'recharts';
-
-type ViewMode = 'focus' | 'full';
 
 function MetricCard({
   icon: Icon,
@@ -65,13 +65,13 @@ function MetricCard({
 
 export function Dashboard() {
   const { input, update, reset } = useSimulation();
-  const [view, setView] = useState<ViewMode>('focus');
+  const [view, setView] = useState<ResponseView>('focus');
   const snapshotResult = simulationSnapshot(input);
   const snapshot = snapshotResult.ok ? snapshotResult.value : null;
   const optimization = optimizeResponseThreshold(input.thresholdMs);
   const maxUsers = optimization.kind === 'feasible' ? optimization.maximumIntegerUsers : 0;
   const responseSeries = useMemo(() => {
-    const result = responseCurve(0, view === 'focus' ? 80 : 99, view === 'focus' ? 81 : 100);
+    const result = responseCurve(0, responseViews[view].end, responseViews[view].steps);
     return result.ok ? result.value : [];
   }, [view]);
   const derivativeSeries = useMemo(() => {
@@ -233,6 +233,15 @@ export function Dashboard() {
             La línea roja indica la capacidad de referencia y no representa un punto evaluado de la
             función.
           </p>
+          <ExportButton
+            figureId="dashboard-response-time"
+            values={{
+              users: input.concurrentUsers,
+              threshold: input.thresholdMs,
+              view,
+            }}
+            label="Exportar respuesta"
+          />
         </Card>
 
         <Card className="controls-card">
@@ -326,6 +335,11 @@ export function Dashboard() {
             </ResponsiveContainer>
           </div>
           <p>La derivada expresa la tasa instantánea de crecimiento en la extensión continua.</p>
+          <ExportButton
+            figureId="derivatives-first"
+            values={{ users: input.concurrentUsers, scale: 'linear' }}
+            label="Exportar derivada"
+          />
         </Card>
         <Card className="chart-card">
           <div className="panel-heading">
@@ -360,6 +374,11 @@ export function Dashboard() {
             El área bajo la tasa desde 0 hasta {formatters.seconds(input.transferTimeSeconds)}{' '}
             acumula <strong>{formatters.megabytes(snapshot.transferredDataMB)}</strong>.
           </p>
+          <ExportButton
+            figureId="integrals-rate-area"
+            values={{ a: 0, b: input.transferTimeSeconds }}
+            label="Exportar transferencia"
+          />
         </Card>
         <Card className="optimization-card">
           <div className="panel-heading">

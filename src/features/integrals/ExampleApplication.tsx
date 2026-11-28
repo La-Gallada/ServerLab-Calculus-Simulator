@@ -13,6 +13,7 @@ import {
   separatedTermsTex,
   differenceTex,
 } from './integralTex';
+import { ExportButton } from '../exports/ExportButton';
 
 interface ExampleApplicationProps {
   number: number;
@@ -107,6 +108,7 @@ export function ExampleApplication({
           Cargar ejemplo {interval}
         </Button>
         <span role="status">{isLoaded ? 'Intervalo cargado en el laboratorio' : ''}</span>
+        <ExportButton figureId={figureId} label={`Exportar ejemplo ${number}`} />
       </div>
     </Card>
   );

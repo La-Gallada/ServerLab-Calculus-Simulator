@@ -1,3 +1,4 @@
+import { lazy, Suspense } from 'react';
 import { Route, Routes } from 'react-router';
 import { SectionPlaceholder } from '../components/ui/SectionPlaceholder';
 import { pages } from '../config/pages';
@@ -7,6 +8,11 @@ import { DerivativesLab } from '../features/derivatives/DerivativesLab';
 import { IntegralsLab } from '../features/integrals/IntegralsLab';
 import { OptimizationLab } from '../features/optimization/OptimizationLab';
 
+// El generador de figuras se carga sólo al visitar el centro o al exportar.
+const ExportCenter = lazy(() =>
+  import('../features/exports/ExportCenter').then((module) => ({ default: module.ExportCenter })),
+);
+
 export function AppRouter() {
   return (
     <Routes>
@@ -15,8 +21,16 @@ export function AppRouter() {
       <Route path="/derivadas" element={<DerivativesLab />} />
       <Route path="/integrales" element={<IntegralsLab />} />
       <Route path="/optimizacion" element={<OptimizationLab />} />
+      <Route
+        path="/exportaciones"
+        element={
+          <Suspense fallback={<p role="status">Cargando el centro de exportaciones…</p>}>
+            <ExportCenter />
+          </Suspense>
+        }
+      />
       {pages.map((page) =>
-        ['/', '/limites', '/derivadas', '/integrales', '/optimizacion'].includes(
+        ['/', '/limites', '/derivadas', '/integrales', '/optimizacion', '/exportaciones'].includes(
           page.path,
         ) ? null : (
           <Route key={page.path} path={page.path} element={<SectionPlaceholder page={page} />} />

@@ -28,6 +28,9 @@ import {
   YAxis,
 } from 'recharts';
 
+import { tangentWindow } from './derivativeWindow';
+import { ExportButton } from '../exports/ExportButton';
+
 type ChartMode = 'tangent' | 'first' | 'second';
 const examples = [0, 25, 50, 65, 75, 90, 99] as const;
 const format = (value: number, digits = 4) =>
@@ -77,12 +80,13 @@ export function DerivativesLab() {
   const increment = discreteResponseIncrement(users);
   const tangent = tangentLine(users);
   const responseData = useMemo(() => {
-    const start = users > 75 ? Math.max(0, users - 18) : 0;
-    const result = responseCurve(start, users > 75 ? 99 : 80, 120);
+    const { curveStart, curveEnd } = tangentWindow(users);
+    const result = responseCurve(curveStart, curveEnd, 120);
     return result.ok ? result.value : [];
   }, [users]);
   const tangentData = useMemo(() => {
-    const result = tangentCurve(users, Math.max(0, users - 12), Math.min(99, users + 12), 25);
+    const { tangentStart, tangentEnd } = tangentWindow(users);
+    const result = tangentCurve(users, tangentStart, tangentEnd, 25);
     return result.ok
       ? result.value.map((point) => ({
           users: point.users,
@@ -325,6 +329,17 @@ export function DerivativesLab() {
                 ? 'Escala logarítmica: R′(n) es positiva y aumenta al acercarse a la capacidad.'
                 : 'Escala logarítmica: R″(n) es positiva; R(n) es convexa en todo el dominio.'}
           </p>
+          <ExportButton
+            figureId={
+              mode === 'tangent'
+                ? 'derivatives-tangent'
+                : mode === 'first'
+                  ? 'derivatives-first'
+                  : 'derivatives-second'
+            }
+            values={mode === 'tangent' ? { users } : { users, scale: 'log' }}
+            label="Exportar gráfica principal"
+          />
         </Card>
         <Card className="tangent-card">
           <p className="eyebrow">Recta tangente</p>

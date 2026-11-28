@@ -13,6 +13,7 @@ import {
   integerTex,
   reorganizeTex,
 } from './optimizationTex';
+import { ExportButton } from '../exports/ExportButton';
 
 interface ScenarioApplicationProps {
   number: number;
@@ -20,6 +21,8 @@ interface ScenarioApplicationProps {
   thresholdMs: number;
   /** Escenario de referencia para la comparación. */
   compareWithMs?: number;
+  /** Carga de análisis actual, usada al exportar. */
+  load: number;
   isLoaded: boolean;
   onLoad: () => void;
 }
@@ -29,6 +32,7 @@ export function ScenarioApplication({
   figureId,
   thresholdMs,
   compareWithMs,
+  load,
   isLoaded,
   onLoad,
 }: ScenarioApplicationProps) {
@@ -103,6 +107,11 @@ export function ScenarioApplication({
           Cargar ejemplo de {threshold}
         </Button>
         <span role="status">{isLoaded ? 'Umbral cargado en el laboratorio' : ''}</span>
+        <ExportButton
+          figureId={figureId}
+          values={{ users: load, view: 'focus' }}
+          label={`Exportar escenario ${number}`}
+        />
       </div>
     </Card>
   );

@@ -8,6 +8,7 @@ import {
   type OptimizationResult,
   type ResponsePoint,
 } from '../../math';
+import { niceCeiling } from './chartTheme';
 import { thresholdRange } from './optimizationInput';
 
 export interface OptimizationLegendItem {
@@ -290,4 +291,29 @@ export function buildCapacityFigure(thresholdMs: number): MathResult<CapacityFig
     steps,
     continuous,
   });
+}
+
+export type ResponseScale = 'focus' | 'full';
+
+/** Máximo del eje Y: la vista enfocada prioriza la intersección con el umbral. */
+export function responseCeiling(figure: ResponseFigure, view: ResponseScale, highestMs: number) {
+  const { thresholdMs } = figure.parameters;
+  const { solution } = figure;
+  const base = mathModelConfig.response.baseResponseMs;
+  if (view === 'full') return niceCeiling(Math.max(highestMs, thresholdMs) * 1.05);
+  if (solution.kind === 'feasible' && solution.responseAtNextUserMs === undefined)
+    return niceCeiling(Math.max(thresholdMs, solution.responseAtMaximumMs) * 1.15);
+  const next = solution.kind === 'feasible' ? (solution.responseAtNextUserMs ?? 0) : 0;
+  return niceCeiling(Math.max(thresholdMs * 1.6, Math.min(next, thresholdMs * 3) * 1.2, base * 5));
+}
+
+/** Marcas redondas para la ampliación local en torno al máximo entero. */
+export function verificationTicks(figure: VerificationFigure): number[] {
+  const values = [...figure.data.map((point) => point.responseMs), figure.parameters.thresholdMs];
+  const low = Math.min(...values);
+  const high = Math.max(...values);
+  const step = niceCeiling((high - low) / 4);
+  const bottom = Math.floor(low / step) * step;
+  const intervals = Math.ceil((high - bottom) / step);
+  return Array.from({ length: intervals + 1 }, (_, index) => bottom + step * index);
 }

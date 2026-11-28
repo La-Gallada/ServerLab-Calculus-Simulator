@@ -1,0 +1,25 @@
+Título: Tiempo de respuesta y región factible para un máximo de 300 ms
+Descripción: Aplicación académica con un tiempo máximo de 300 ms.
+Variables y unidades:
+- n: usuarios concurrentes (usuarios)
+- R(n): tiempo de respuesta (ms)
+- L: tiempo máximo permitido (ms)
+- m: máximo entero factible (usuarios)
+Parámetros utilizados:
+- Umbral L: 300 ms
+- Carga de análisis: 65 usuarios
+- Vista: enfocada
+- Máximo entero: 50 usuarios
+Dominio: Extensión continua 0 ≤ n < 100; la operación usa enteros de 0 a 99. n = 100 no se evalúa.
+Modelo matemático:
+- R(n) = 100 + 200n/(100 − n), con 0 ≤ n < 100 (ms)
+- Maximizar n sujeto a R(n) ≤ L, con n entero
+- Frontera continua (si L ≥ B): n* = C(L − B)/(L − B + k)
+- Máximo entero: m = mín(⌊n*⌋, C − 1)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Lineal en ambos ejes; eje vertical de 0 a 500 ms, la curva continúa fuera de la vista.
+Resumen: Con un máximo de 300 ms, la región factible llega hasta n* = 50 y el máximo entero es 50 usuarios.
+
+Nota. Elaboración propia mediante ServerLab, a partir del modelo matemático hipotético utilizado en el Proyecto de Investigación #4 de Cálculo I.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

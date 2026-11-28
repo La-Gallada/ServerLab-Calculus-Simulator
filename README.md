@@ -6,7 +6,7 @@ Aplicación web educativa para el Proyecto de Investigación #4 de **Cálculo I*
 
 ## Estado
 
-Hasta M07 están completos el Dashboard y los laboratorios de Límites, Derivadas, Integrales y Optimización. La exportación sigue planificada; el motor matemático central continúa siendo provisional e hipotético.
+Hasta M08 están completos el Dashboard, los laboratorios de Límites, Derivadas, Integrales y Optimización, y la exportación de figuras académicas (PNG, SVG y CSV en `/#/exportaciones`; ver [docs/EXPORT-SYSTEM.md](docs/EXPORT-SYSTEM.md)); el motor matemático central continúa siendo provisional e hipotético.
 
 ## Versionado
 
@@ -53,7 +53,8 @@ El documento fuente es [docs/MATHEMATICAL-MODEL.md](docs/MATHEMATICAL-MODEL.md).
 src/app/           composición y rutas
 src/components/    layout y componentes UI reutilizables
 src/config/        metadatos de páginas y del modelo
-src/features/      Dashboard y laboratorios por módulo
+src/export/        registro de figuras y generación de archivos
+src/features/      Dashboard, laboratorios y centro de exportaciones
 src/math/          motor central de fórmulas
 src/styles/        tokens y estilos globales
 src/test/          configuración de pruebas unitarias
@@ -64,4 +65,4 @@ references/        mockup de opción 1 (no se publica)
 docs/              arquitectura, decisiones e informes
 ```
 
-La estrategia de exportación académica está documentada en [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) y se implementará en M08.
+El sistema de exportación está documentado en [docs/EXPORT-SYSTEM.md](docs/EXPORT-SYSTEM.md) y su catálogo en [docs/ACADEMIC-FIGURES-CATALOG.md](docs/ACADEMIC-FIGURES-CATALOG.md).

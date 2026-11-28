@@ -37,3 +37,7 @@ La composición adopta del mockup de opción 1 la barra lateral oscura, los pane
 - Mantener las asíntotas separadas de la serie y excluir `n=100` de los puntos.
 - Para exportación: fondo blanco, texto oscuro, título, leyenda, unidades, ejes completos y pie de figura generado desde los parámetros actuales.
 - La vista de app conserva el tema oscuro. Validar que etiquetas y leyendas no se recorten a 320 px y en escritorio.
+
+## Temas de exportación (M08)
+
+`src/export/themes.ts` centraliza los tokens. Académico: fondo blanco, azul oscuro para la función, violeta para derivadas, verde oscuro para integrales, ámbar oscuro para umbrales, rojo moderado para lo no factible y gris para referencias. ServerLab reutiliza la paleta oscura. Trazos, formas y tramas son comunes y no dependen del color. Tipografía Arial/Helvetica sobre un lienzo de 1200 × 800.
