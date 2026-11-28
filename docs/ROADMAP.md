@@ -15,3 +15,5 @@
 | M10  | Cierre técnico                | README técnico, guía de ejecución/despliegue estático y evidencia de validación; sin despliegue ni push sin autorización.                      |
 
 Secuencia obligatoria: no iniciar un hito hasta cumplir el criterio del anterior, salvo autorización explícita del usuario.
+
+Versionado: M00–M07 quedaron consolidados en un commit; desde M08 cada hito termina con su propio commit local tras un veredicto GO. Push, merge y despliegue requieren autorización (ver `AGENTS.md`).

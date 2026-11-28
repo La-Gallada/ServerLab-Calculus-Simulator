@@ -8,6 +8,10 @@ Aplicación web educativa para el Proyecto de Investigación #4 de **Cálculo I*
 
 Hasta M07 están completos el Dashboard y los laboratorios de Límites, Derivadas, Integrales y Optimización. La exportación sigue planificada; el motor matemático central continúa siendo provisional e hipotético.
 
+## Versionado
+
+Cada milestone finaliza con un commit local en formato Conventional Commits. El propietario gestiona push y publicación. Las reglas completas están en [AGENTS.md](AGENTS.md).
+
 ## Requisitos
 
 - Node.js 20.19 o superior (M01 se verificó con Node 24.19.0).

@@ -3,9 +3,27 @@
 ## Alcance y seguridad
 
 - Este repositorio es la fuente oficial. Inspeccionar estado de Git antes de cambios relevantes.
-- No hacer commit, push, despliegue, cambios de visibilidad, ramas remotas ni modificaciones al documento académico sin autorización explícita.
+- No hacer cambios de visibilidad, ramas remotas ni modificaciones al documento académico sin autorización explícita.
 - No eliminar recursos gráficos originales ni sobrescribir el README del asset pack sin conservar una copia.
 - No instalar dependencias, inicializar stack o implementar fuera del hito autorizado.
+
+## Control de versiones
+
+| Operación                                                                                                         | Estado                |
+| ----------------------------------------------------------------------------------------------------------------- | --------------------- |
+| Commits locales al finalizar milestones                                                                           | AUTORIZADOS           |
+| Push al repositorio remoto                                                                                        | REQUIERE AUTORIZACIÓN |
+| Merge                                                                                                             | REQUIERE AUTORIZACIÓN |
+| Despliegue                                                                                                        | REQUIERE AUTORIZACIÓN |
+| Operaciones destructivas de Git (reset --hard, clean, rebase o amend de historial, force push, descartar cambios) | NO AUTORIZADAS        |
+
+- Cada milestone termina con un commit local independiente, sólo después de: completar la implementación, ejecutar las validaciones obligatorias, corregir errores bloqueantes, generar evidencias, actualizar documentación, obtener veredicto GO y revisar los archivos preparados.
+- Usar Conventional Commits en inglés, con el identificador del milestone, funcionalidades, decisiones, correcciones, documentación, resultados reales de pruebas y limitaciones. Sin mensajes genéricos. Documentación académica e interfaz en español.
+- Previstos: `feat(exports): implement academic figure export system (M08)`, `perf(serverlab): optimize performance and resolve audit findings (M09)`, `chore(release): prepare ServerLab for production deployment (M10)`. Adaptarlos al trabajo realmente realizado; en correcciones usar fix, perf, refactor, test, docs o chore.
+- Antes de confirmar: verificar rama, remoto, identidad configurada (no inventarla), `.gitignore`, y que no haya secretos, archivos de entorno, cachés, resultados temporales ni rutas personales.
+- Después de confirmar: comprobar hash, mensaje, archivos, working tree, rama, historial y remoto con comandos no destructivos.
+- Si un milestone se interrumpe: conservar los archivos, documentar el estado parcial, no declararlo completado ni crear su commit. Un commit parcial de recuperación requiere autorización específica.
+- Cada informe de milestone incluye la sección «Git and Version Control»: hash, título, resumen, número de archivos, rama, working tree, estado de push y confirmación de que no hubo despliegue.
 
 ## Rigor académico y matemático
 

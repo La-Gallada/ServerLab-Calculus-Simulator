@@ -1,42 +1,44 @@
 # Registro de decisiones
 
-| ID      | Decisión                                                                          | Estado    | Razón / seguimiento                                                      |
-| ------- | --------------------------------------------------------------------------------- | --------- | ------------------------------------------------------------------------ |
-| D-00-01 | M00 se limita a auditoría y documentación.                                        | adoptada  | No inicializar Vite, instalar paquetes ni crear componentes.             |
-| D-00-02 | Opción 1 es la única referencia visual primaria.                                  | adoptada  | Indicación explícita del proyecto y README del asset pack.               |
-| D-00-03 | El modelo es hipotético y configurable.                                           | adoptada  | El PDF local y el prompt indican que las funciones son provisionales.    |
-| D-00-04 | Motor matemático puro y centralizado; vistas sin fórmulas duplicadas.             | adoptada  | Garantiza corrección y reemplazo de parámetros posterior.                |
-| D-00-05 | Sin CPU/RAM hasta modelos aprobados.                                              | adoptada  | Evita inventar métricas académicas.                                      |
-| D-00-06 | PNG de botones como referencia; botones HTML accesibles para interacción.         | adoptada  | Instrucción expresa del README del paquete.                              |
-| D-00-07 | Exportaciones blancas separadas del tema oscuro.                                  | adoptada  | Requisito académico de figuras para el documento.                        |
-| P-00-01 | Confirmar fórmulas definitivas y responsables de contenidos por pantalla.         | pendiente | Requiere acuerdo del grupo/docente.                                      |
-| P-00-02 | Confirmar acceso/sincronización con `origin/main`.                                | pendiente | La referencia de seguimiento aparece como gone.                          |
-| P-00-03 | Elegir biblioteca/estrategia de rasterización PNG de alta resolución.             | pendiente | Debe probarse antes de prometer compatibilidad.                          |
-| P-00-04 | Revisar apartados 8 y 13 del Google Doc colaborativo.                             | pendiente | No había acceso autorizado en esta sesión.                               |
-| D-01-01 | Usar HashRouter.                                                                  | adoptada  | Permite publicar estáticamente sin reglas de reescritura.                |
-| D-01-02 | Conservar assets en `assets/` y servir copias de `public/assets/`.                | adoptada  | Preserva la fuente original y mantiene referencias fuera de publicación. |
-| D-01-03 | Reservar `src/math/` para M02; metadatos en `src/config/model.ts`.                | adoptada  | Impide adelantar o dispersar fórmulas provisionales.                     |
-| D-01-04 | Exportar SVG a PNG con Web APIs en M08.                                           | adoptada  | Mantiene la app estática sin dependencia adicional.                      |
-| D-01-05 | Ejecutar Playwright y Vite Preview fuera del sandbox en el mismo entorno Windows. | adoptada  | Evita el aislamiento de puertos y la ruta temporal variable de Chromium. |
-| D-01-06 | Fijar Vite Preview en `127.0.0.1:4173` con `--strictPort`.                        | adoptada  | Alinea `baseURL` y servidor, evitando puertos alternativos silenciosos.  |
-| P-01-01 | Ejecutar E2E visual y capturas de cuatro viewports.                               | resuelta  | M01.1 produjo cinco capturas reales y aprobó la prueba Chromium.         |
-| D-02-01 | Usar `MathResult<T>` y `LimitResult` para errores y singularidades.               | adoptada  | Distingue entradas inválidas, sin solución e infinito sin NaN/Infinity.  |
-| D-02-02 | Mantener cálculos, muestreo y formato fuera de React.                             | adoptada  | El motor será reutilizable por pantallas y exportaciones posteriores.    |
-| D-03-01 | Usar un `SimulationProvider` local con Context y hook tipado.                     | adoptada  | Comparte controles futuros sin incorporar una dependencia de estado.     |
-| D-03-02 | Muestras de respuesta en vista habitual (0–80) y operativa (0–99).                | adoptada  | Conserva legibilidad sin evaluar ni inventar un punto en la asíntota.    |
-| D-03-03 | Desactivar animaciones de Recharts en el Dashboard.                               | adoptada  | La interacción se actualiza de inmediato y evita distracciones visuales. |
-| D-04-01 | Mantener el caso y distancia de aproximación como estado local de Límites.        | adoptada  | Protege los controles discretos compartidos del Dashboard.               |
-| D-04-02 | Usar escala Y logarítmica sólo para la aproximación a capacidad.                  | adoptada  | Permite leer el crecimiento extremo sin truncar ni alterar R(n).         |
-| D-04-03 | Redondear sólo ruido de punto flotante casi entero al presentar R(n).             | adoptada  | Conserva cálculos M02 y evita mostrar artefactos como 1 999 899,999999.  |
-| D-05-01 | Mantener el punto de Derivadas como estado local entero.                          | adoptada  | Inicia desde Dashboard sin modificar la simulación compartida.           |
-| D-05-02 | Usar escala lineal para tangente y logarítmica identificada para R′ y R″.         | adoptada  | Preserva la pendiente y vuelve legible el crecimiento extremo.           |
-| D-06-01 | Mantener `[a,b]` como estado local; reiniciar a `[0, duración del Dashboard]`.    | adoptada  | Permite explorar intervalos sin alterar la simulación compartida.        |
-| D-06-02 | Detener cada slider en el otro límite; nunca intercambiar a y b.                  | adoptada  | Mantiene a ≤ b con escalas comparables de 0 a 30 s.                      |
-| D-06-03 | Campo numérico de texto con hasta dos decimales (coma o punto).                   | adoptada  | Admite notación es-CR y evita valores ocultos por redondeo.              |
-| D-06-04 | Describir figuras como datos con identificadores estables.                        | adoptada  | Prepara la exportación de M08 sin implementarla.                         |
-| D-07-01 | Mantener `{L, n}` como estado local; reiniciar a los valores del Dashboard.       | adoptada  | Permite comparar escenarios sin alterar la simulación compartida.        |
-| D-07-02 | Confirmar el umbral escrito sólo con Enter o al salir del campo.                  | adoptada  | Evita aplicar prefijos incompletos.                                      |
-| D-07-03 | Deslizador de 50 a 2 000 ms y campo de 0 a 25 000 ms.                             | adoptada  | Legibilidad educativa y acceso al caso m = 99; no restringe el motor.    |
-| D-07-04 | Eje lineal con vista enfocada y dominio completo, más ampliación en torno a m.    | adoptada  | Muestra la intersección sin alterar datos y separa puntos cercanos.      |
-| D-07-05 | Escalera de capacidad con saltos exactos L = R(m).                                | adoptada  | Evita errores de muestreo y no representa infactibilidad como cero.      |
-| D-07-06 | Escribir evidencia versionada sólo cuando `EVIDENCE` nombre el hito.              | adoptada  | Evita sobrescribir capturas históricas.                                  |
+| ID      | Decisión                                                                                             | Estado    | Razón / seguimiento                                                                       |
+| ------- | ---------------------------------------------------------------------------------------------------- | --------- | ----------------------------------------------------------------------------------------- |
+| D-00-01 | M00 se limita a auditoría y documentación.                                                           | adoptada  | No inicializar Vite, instalar paquetes ni crear componentes.                              |
+| D-00-02 | Opción 1 es la única referencia visual primaria.                                                     | adoptada  | Indicación explícita del proyecto y README del asset pack.                                |
+| D-00-03 | El modelo es hipotético y configurable.                                                              | adoptada  | El PDF local y el prompt indican que las funciones son provisionales.                     |
+| D-00-04 | Motor matemático puro y centralizado; vistas sin fórmulas duplicadas.                                | adoptada  | Garantiza corrección y reemplazo de parámetros posterior.                                 |
+| D-00-05 | Sin CPU/RAM hasta modelos aprobados.                                                                 | adoptada  | Evita inventar métricas académicas.                                                       |
+| D-00-06 | PNG de botones como referencia; botones HTML accesibles para interacción.                            | adoptada  | Instrucción expresa del README del paquete.                                               |
+| D-00-07 | Exportaciones blancas separadas del tema oscuro.                                                     | adoptada  | Requisito académico de figuras para el documento.                                         |
+| P-00-01 | Confirmar fórmulas definitivas y responsables de contenidos por pantalla.                            | pendiente | Requiere acuerdo del grupo/docente.                                                       |
+| P-00-02 | Confirmar acceso/sincronización con `origin/main`.                                                   | pendiente | La referencia de seguimiento aparece como gone.                                           |
+| P-00-03 | Elegir biblioteca/estrategia de rasterización PNG de alta resolución.                                | pendiente | Debe probarse antes de prometer compatibilidad.                                           |
+| P-00-04 | Revisar apartados 8 y 13 del Google Doc colaborativo.                                                | pendiente | No había acceso autorizado en esta sesión.                                                |
+| D-01-01 | Usar HashRouter.                                                                                     | adoptada  | Permite publicar estáticamente sin reglas de reescritura.                                 |
+| D-01-02 | Conservar assets en `assets/` y servir copias de `public/assets/`.                                   | adoptada  | Preserva la fuente original y mantiene referencias fuera de publicación.                  |
+| D-01-03 | Reservar `src/math/` para M02; metadatos en `src/config/model.ts`.                                   | adoptada  | Impide adelantar o dispersar fórmulas provisionales.                                      |
+| D-01-04 | Exportar SVG a PNG con Web APIs en M08.                                                              | adoptada  | Mantiene la app estática sin dependencia adicional.                                       |
+| D-01-05 | Ejecutar Playwright y Vite Preview fuera del sandbox en el mismo entorno Windows.                    | adoptada  | Evita el aislamiento de puertos y la ruta temporal variable de Chromium.                  |
+| D-01-06 | Fijar Vite Preview en `127.0.0.1:4173` con `--strictPort`.                                           | adoptada  | Alinea `baseURL` y servidor, evitando puertos alternativos silenciosos.                   |
+| P-01-01 | Ejecutar E2E visual y capturas de cuatro viewports.                                                  | resuelta  | M01.1 produjo cinco capturas reales y aprobó la prueba Chromium.                          |
+| D-02-01 | Usar `MathResult<T>` y `LimitResult` para errores y singularidades.                                  | adoptada  | Distingue entradas inválidas, sin solución e infinito sin NaN/Infinity.                   |
+| D-02-02 | Mantener cálculos, muestreo y formato fuera de React.                                                | adoptada  | El motor será reutilizable por pantallas y exportaciones posteriores.                     |
+| D-03-01 | Usar un `SimulationProvider` local con Context y hook tipado.                                        | adoptada  | Comparte controles futuros sin incorporar una dependencia de estado.                      |
+| D-03-02 | Muestras de respuesta en vista habitual (0–80) y operativa (0–99).                                   | adoptada  | Conserva legibilidad sin evaluar ni inventar un punto en la asíntota.                     |
+| D-03-03 | Desactivar animaciones de Recharts en el Dashboard.                                                  | adoptada  | La interacción se actualiza de inmediato y evita distracciones visuales.                  |
+| D-04-01 | Mantener el caso y distancia de aproximación como estado local de Límites.                           | adoptada  | Protege los controles discretos compartidos del Dashboard.                                |
+| D-04-02 | Usar escala Y logarítmica sólo para la aproximación a capacidad.                                     | adoptada  | Permite leer el crecimiento extremo sin truncar ni alterar R(n).                          |
+| D-04-03 | Redondear sólo ruido de punto flotante casi entero al presentar R(n).                                | adoptada  | Conserva cálculos M02 y evita mostrar artefactos como 1 999 899,999999.                   |
+| D-05-01 | Mantener el punto de Derivadas como estado local entero.                                             | adoptada  | Inicia desde Dashboard sin modificar la simulación compartida.                            |
+| D-05-02 | Usar escala lineal para tangente y logarítmica identificada para R′ y R″.                            | adoptada  | Preserva la pendiente y vuelve legible el crecimiento extremo.                            |
+| D-06-01 | Mantener `[a,b]` como estado local; reiniciar a `[0, duración del Dashboard]`.                       | adoptada  | Permite explorar intervalos sin alterar la simulación compartida.                         |
+| D-06-02 | Detener cada slider en el otro límite; nunca intercambiar a y b.                                     | adoptada  | Mantiene a ≤ b con escalas comparables de 0 a 30 s.                                       |
+| D-06-03 | Campo numérico de texto con hasta dos decimales (coma o punto).                                      | adoptada  | Admite notación es-CR y evita valores ocultos por redondeo.                               |
+| D-06-04 | Describir figuras como datos con identificadores estables.                                           | adoptada  | Prepara la exportación de M08 sin implementarla.                                          |
+| D-07-01 | Mantener `{L, n}` como estado local; reiniciar a los valores del Dashboard.                          | adoptada  | Permite comparar escenarios sin alterar la simulación compartida.                         |
+| D-07-02 | Confirmar el umbral escrito sólo con Enter o al salir del campo.                                     | adoptada  | Evita aplicar prefijos incompletos.                                                       |
+| D-07-03 | Deslizador de 50 a 2 000 ms y campo de 0 a 25 000 ms.                                                | adoptada  | Legibilidad educativa y acceso al caso m = 99; no restringe el motor.                     |
+| D-07-04 | Eje lineal con vista enfocada y dominio completo, más ampliación en torno a m.                       | adoptada  | Muestra la intersección sin alterar datos y separa puntos cercanos.                       |
+| D-07-05 | Escalera de capacidad con saltos exactos L = R(m).                                                   | adoptada  | Evita errores de muestreo y no representa infactibilidad como cero.                       |
+| D-07-06 | Escribir evidencia versionada sólo cuando `EVIDENCE` nombre el hito.                                 | adoptada  | Evita sobrescribir capturas históricas.                                                   |
+| D-V-01  | Autorizar commits locales al cerrar cada milestone; push, merge y despliegue requieren autorización. | adoptada  | Instrucción del propietario del 27-11-2026; sustituye la prohibición anterior de commits. |
+| D-V-02  | Consolidar M00–M07 en un solo commit sin fabricar historia retrospectiva.                            | adoptada  | Esos hitos no se versionaron individualmente; ver 5e41c7f.                                |
