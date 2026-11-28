@@ -25,7 +25,7 @@ export function Header({ onMenuOpen }: HeaderProps) {
         <p className="app-header__kicker">Analiza · Calcula · Optimiza</p>
         <p className="app-header__title">{page?.title ?? 'ServerLab'}</p>
       </div>
-      <div className="app-header__status" aria-label="Estado del entorno">
+      <div className="app-header__status">
         <Radio aria-hidden="true" size={17} />
         <span>Entorno académico</span>
       </div>

@@ -41,3 +41,7 @@ La composición adopta del mockup de opción 1 la barra lateral oscura, los pane
 ## Temas de exportación (M08)
 
 `src/export/themes.ts` centraliza los tokens. Académico: fondo blanco, azul oscuro para la función, violeta para derivadas, verde oscuro para integrales, ámbar oscuro para umbrales, rojo moderado para lo no factible y gris para referencias. ServerLab reutiliza la paleta oscura. Trazos, formas y tramas son comunes y no dependen del color. Tipografía Arial/Helvetica sobre un lienzo de 1200 × 800.
+
+## Ajustes de M09
+
+Gráficas interactivas: leyenda superior, título vertical centrado con unidad y marcas en color atenuado. Procedimientos con listas numeradas. Campos numéricos: borrador, Enter o salida para aplicar, Escape para cancelar y aviso con el valor conservado. Enlace de salto visible al recibir foco. Iconos derivados del isotipo oficial, con transparencia.

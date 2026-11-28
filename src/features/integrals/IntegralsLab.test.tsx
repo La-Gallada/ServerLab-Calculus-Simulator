@@ -1,6 +1,9 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { App } from '../../app/App';
+import { preloadRoutes } from '../../app/routes';
+
+beforeAll(preloadRoutes);
 
 function renderLab(hash = '#/integrales') {
   window.location.hash = hash;
@@ -13,6 +16,11 @@ const field = (symbol: 'a' | 'b') =>
   screen.getByRole('textbox', { name: `Valor exacto de ${symbol} (s)` });
 const change = (element: HTMLElement, value: string) =>
   fireEvent.change(element, { target: { value } });
+/** Escribe el texto completo y lo confirma con Enter. */
+const commit = (symbol: 'a' | 'b', value: string) => {
+  change(field(symbol), value);
+  fireEvent.keyDown(field(symbol), { key: 'Enter' });
+};
 const click = (name: string | RegExp) => fireEvent.click(screen.getByRole('button', { name }));
 
 /** Verifica en orden D(a,b), b − a, T(a) y T(b). */
@@ -62,39 +70,58 @@ describe('laboratorio de integrales', () => {
 
   it('admite decimales con coma o punto en el campo numérico', () => {
     renderLab();
-    change(field('a'), '10,5');
-    change(field('b'), '20.5');
+    commit('a', '10,5');
+    commit('b', '20.5');
     expectMetrics('81 MB', '10 s', '7,1 MB/s', '9,1 MB/s');
     expect(slider('inferior (a)')).toHaveAttribute('step', 'any');
   });
 
   it.each([
-    ['', 'máximo de dos decimales'],
-    ['abc', 'máximo de dos decimales'],
-    ['Infinity', 'máximo de dos decimales'],
-    ['NaN', 'máximo de dos decimales'],
-    ['1,234', 'máximo de dos decimales'],
+    ['', 'máximo dos cifras'],
+    ['abc', 'máximo dos cifras'],
+    ['Infinity', 'máximo dos cifras'],
+    ['NaN', 'máximo dos cifras'],
+    ['1,234', 'es ambiguo'],
     ['31', 'excede el intervalo'],
     ['-1', 'no puede ser negativo'],
     ['9'.repeat(400), 'número finito'],
     ['5', 'no puede ser menor'],
   ])('no propaga la entrada inválida «%s»', (text, message) => {
     renderLab();
-    change(field('a'), '10');
+    commit('a', '10');
     const upper = field('b');
-    change(upper, text);
+    commit('b', text);
     expect(screen.getByRole('alert')).toHaveTextContent(message);
     expect(upper).toHaveAttribute('aria-invalid', 'true');
     expect(slider('superior (b)')).toHaveValue('30');
     expectMetrics('180 MB', '20 s', '7 MB/s', '11 MB/s');
     fireEvent.blur(upper);
+    // El borrador inválido se conserva para corregirlo; Escape lo descarta.
+    expect(upper).toHaveValue(text);
+    fireEvent.keyDown(upper, { key: 'Escape' });
     expect(upper).toHaveValue('30');
+  });
+
+  it('no aplica prefijos mientras se escribe y confirma al salir', () => {
+    renderLab();
+    commit('a', '2');
+    change(field('b'), '3');
+    expectMetrics('229,6 MB', '28 s', '5,4 MB/s', '11 MB/s');
+    expect(screen.getByText(/Sin aplicar/)).toBeInTheDocument();
+    change(field('b'), '35');
+    fireEvent.blur(field('b'));
     expect(screen.getByRole('alert')).toHaveTextContent('Se conserva b = 30 s');
+    expect(slider('superior (b)')).toHaveValue('30');
+    change(field('b'), '12');
+    fireEvent.blur(field('b'));
+    expectMetrics('64 MB', '10 s', '5,4 MB/s', '7,4 MB/s');
+    commit('a', '12');
+    expectMetrics('0 MB', '0 s', '7,4 MB/s', '7,4 MB/s');
   });
 
   it('retira el aviso cuando el límite cambia por otra vía', () => {
     renderLab();
-    change(field('b'), '99');
+    commit('b', '99');
     click('Reiniciar intervalo');
     change(slider('superior (b)'), '20');
     expect(screen.queryByRole('alert')).not.toBeInTheDocument();
@@ -146,13 +173,13 @@ describe('laboratorio de integrales', () => {
     renderLab();
     expect(screen.getAllByRole('row')).toHaveLength(8);
     expect(screen.getByRole('row', { name: /^25 / })).toHaveTextContent('10 MB/s187,5 MB');
-    click('Fijar 10 s como límite inferior a');
-    click('Fijar 20 s como límite superior b');
+    click('Fijar a en 10 s (límite inferior)');
+    click('Fijar b en 20 s (límite superior)');
     expectMetrics('80 MB', '10 s', '7 MB/s', '9 MB/s');
     expect(
-      screen.getByRole('button', { name: 'Fijar 25 s como límite inferior a' }),
+      screen.getByRole('button', { name: 'Fijar a en 25 s (límite inferior)' }),
     ).toBeDisabled();
-    expect(screen.getByRole('button', { name: 'Fijar 5 s como límite superior b' })).toBeDisabled();
+    expect(screen.getByRole('button', { name: 'Fijar b en 5 s (límite superior)' })).toBeDisabled();
     expect(screen.getByRole('row', { name: /^15 / })).toHaveTextContent('Dentro');
     expect(screen.getByRole('row', { name: /^25 / })).toHaveTextContent('Fuera');
   });
@@ -204,9 +231,9 @@ describe('laboratorio de integrales', () => {
       ['30', '30'],
       ['0', '30'],
     ]) {
-      change(field('a'), '0');
-      change(field('b'), b);
-      change(field('a'), a);
+      commit('a', '0');
+      commit('b', b);
+      commit('a', a);
       expect(document.body).not.toHaveTextContent('NaN');
       expect(document.body).not.toHaveTextContent('Infinity');
     }

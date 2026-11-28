@@ -13,12 +13,9 @@ async function expectNoHorizontalOverflow(page: Page) {
 
 async function waitForSidebarPosition(page: Page, open: boolean) {
   const sidebar = page.getByRole('complementary', { name: 'Navegación principal' });
-  await expect
-    .poll(async () => {
-      const x = (await sidebar.boundingBox())?.x ?? 0;
-      return open ? Math.abs(x) < 1 : x < -280;
-    })
-    .toBe(true);
+  // Cerrado queda oculto, para que no reciba el foco del teclado.
+  if (!open) return expect(sidebar).toBeHidden();
+  await expect.poll(async () => Math.abs((await sidebar.boundingBox())?.x ?? -999) < 1).toBe(true);
 }
 
 test('valida navegación, recursos y experiencia responsive del Application Shell', async ({

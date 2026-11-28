@@ -12,7 +12,12 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
   return (
     <aside className={`sidebar ${isOpen ? 'sidebar--open' : ''}`} aria-label="Navegación principal">
       <div className="sidebar__brand">
-        <img src="/assets/branding/serverlab-logo-full.png" alt="ServerLab Calculus Simulator" />
+        <img
+          src="/assets/branding/serverlab-logo-full-336.webp"
+          width={168}
+          height={168}
+          alt="ServerLab Calculus Simulator"
+        />
         <Button
           aria-label="Cerrar menú"
           className="sidebar__close"

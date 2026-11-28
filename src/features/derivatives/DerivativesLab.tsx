@@ -1,7 +1,6 @@
 import { useMemo, useState } from 'react';
 import { Activity, ChevronRight, RotateCcw, TrendingUp } from 'lucide-react';
 import { Link } from 'react-router';
-import katex from 'katex';
 import {
   derivativeCurve,
   discreteResponseIncrement,
@@ -13,9 +12,11 @@ import {
   tangentLine,
 } from '../../math';
 import { mathModelConfig } from '../../config/model';
+import { capacityUsers, exampleLoads, lastOperationalUser } from '../../config/domain';
 import { useSimulation } from '../../state/useSimulation';
 import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
+import { Formula } from '../../components/ui/Formula';
 import {
   CartesianGrid,
   Legend,
@@ -32,22 +33,11 @@ import { tangentWindow } from './derivativeWindow';
 import { ExportButton } from '../exports/ExportButton';
 
 type ChartMode = 'tangent' | 'first' | 'second';
-const examples = [0, 25, 50, 65, 75, 90, 99] as const;
+const examples = exampleLoads([0, 25, 50, 65, 75, 90]);
 const format = (value: number, digits = 4) =>
   new Intl.NumberFormat('es-CR', { maximumFractionDigits: digits }).format(
     Math.abs(value - Math.round(value)) < 0.00001 ? Math.round(value) : value,
   );
-function Formula({ expression, label }: { expression: string; label: string }) {
-  return (
-    <span
-      aria-label={label}
-      className="math-formula"
-      dangerouslySetInnerHTML={{
-        __html: katex.renderToString(expression, { throwOnError: false }),
-      }}
-    />
-  );
-}
 function Metric({
   label,
   value,
@@ -96,11 +86,11 @@ export function DerivativesLab() {
       : [];
   }, [users]);
   const firstData = useMemo(() => {
-    const result = derivativeCurve(1, 0, 99, 120);
+    const result = derivativeCurve(1, 0, lastOperationalUser, 120);
     return result.ok ? result.value : [];
   }, []);
   const secondData = useMemo(() => {
-    const result = derivativeCurve(2, 0, 99, 120);
+    const result = derivativeCurve(2, 0, lastOperationalUser, 120);
     return result.ok ? result.value : [];
   }, []);
   const rows = useMemo(
@@ -184,7 +174,7 @@ export function DerivativesLab() {
             aria-label="Usuarios del punto de análisis"
             type="range"
             min="0"
-            max="99"
+            max={lastOperationalUser}
             step="1"
             value={users}
             onChange={(e) => setUsers(Number(e.target.value))}
@@ -263,16 +253,16 @@ export function DerivativesLab() {
           </div>
           <div className="derivative-chart">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={chart} margin={{ top: 14, right: 20, left: 8, bottom: 8 }}>
+              <LineChart data={chart} margin={{ top: 8, right: 26, left: 8, bottom: 18 }}>
                 <CartesianGrid stroke="rgba(148,163,184,.18)" strokeDasharray="3 3" />
                 <XAxis
                   dataKey="users"
                   type="number"
-                  domain={[0, 100]}
+                  domain={[0, capacityUsers]}
                   label={{
                     value: 'Usuarios concurrentes (n)',
                     position: 'insideBottom',
-                    offset: -2,
+                    offset: -12,
                     fill: '#c8d5eb',
                   }}
                 />
@@ -281,8 +271,14 @@ export function DerivativesLab() {
                   scale={mode === 'tangent' ? 'auto' : 'log'}
                   domain={['auto', 'auto']}
                   width={80}
-                  tickFormatter={(v) => `${format(Number(v), 0)}`}
-                  label={{ value: unit, angle: -90, position: 'insideLeft', fill: '#c8d5eb' }}
+                  tickFormatter={(v) => format(Number(v), Number(v) < 1 ? 2 : 0)}
+                  label={{
+                    value: unit,
+                    angle: -90,
+                    position: 'insideLeft',
+                    style: { textAnchor: 'middle' },
+                    fill: '#c8d5eb',
+                  }}
                 />
                 <Tooltip
                   formatter={(v) => `${format(Number(v), 6)} ${unit}`}
@@ -293,7 +289,7 @@ export function DerivativesLab() {
                     borderRadius: 10,
                   }}
                 />
-                <Legend />
+                <Legend verticalAlign="top" height={32} />
                 <ReferenceLine x={users} stroke="#f59e0b" strokeDasharray="5 4" />
                 {mode === 'tangent' && (
                   <>
@@ -417,6 +413,7 @@ export function DerivativesLab() {
         <Card className="procedure-card">
           <p className="eyebrow">Aplicaciones académicas</p>
           <h2>Derivación y convexidad</h2>
+          <h3>Procedimiento de R′(n)</h3>
           <Formula
             expression={`R'(n)=\\frac{${k}(${c})}{(${c}-n)^2}=\\frac{${k * c}}{(${c}-n)^2}`}
             label="primera derivada"
@@ -428,6 +425,7 @@ export function DerivativesLab() {
               R′({users}) = {format(first.value, 6)} ms/usuario expresa sensibilidad instantánea.
             </li>
           </ol>
+          <h3>Procedimiento de R″(n)</h3>
           <Formula
             expression={`R''(n)=\\frac{${2 * k * c}}{(${c}-n)^3}`}
             label="segunda derivada"

@@ -16,3 +16,7 @@ Los resultados se verifican en `src/math/math.test.ts` contra el motor, usando t
 Para 500 ms, la intersección continua es 66.6666667 usuarios; la solución operativa es 66, con R(66)=488.2352941 ms, mientras R(67)=506.0606061 ms. Un usuario es discreto; 66.6666667 sólo representa la intersección continua del modelo.
 
 Propiedades probadas: crecimiento de R, positividad y crecimiento de R', positividad de R'', coincidencia de tangente en el punto, A'(t)≈T(t), aditividad de integrales, vecinos de optimización y ausencia de puntos no finitos en curvas.
+
+## M09
+
+`src/math/optimization.test.ts` verifica los 100 umbrales exactos L = R(n) y los números de coma flotante inmediatamente inferior y superior, umbrales hasta `Number.MAX_VALUE`, negativos y una configuración alternativa. `src/math/audit.test.ts` contrasta R, R′, R″, tangente, incrementos, T e integrales con expresiones del enunciado, diferencias finitas e integración numérica.

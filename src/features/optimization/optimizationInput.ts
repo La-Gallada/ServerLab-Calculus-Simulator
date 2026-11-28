@@ -1,39 +1,38 @@
-import { failure, validateFinite, type MathResult } from '../../math';
+import { lastOperationalUser } from '../../config/domain';
+import { mathModelConfig } from '../../config/model';
+import { failure, responseTime, type MathResult } from '../../math';
+import { parseDecimal } from '../shared/numberInput';
+import { niceCeiling } from './chartTheme';
+
+const base = mathModelConfig.response.baseResponseMs;
+const presets = mathModelConfig.controls.responseThresholdsMs;
+const lastResponse = responseTime(lastOperationalUser);
+const largestResponse = lastResponse.ok ? lastResponse.value : Math.max(...presets);
 
 /**
- * Rangos de interacción de la interfaz. No son el dominio del motor, que admite
- * cualquier umbral finito. El campo llega más allá de R(C − 1) para poder
- * estudiar el último usuario operativo.
+ * Rangos de interacción de la interfaz, derivados de la configuración. No son el
+ * dominio del motor, que admite cualquier umbral finito no negativo. El campo
+ * llega más allá de R(C − 1) para poder estudiar el último usuario operativo.
  */
 export const thresholdRange = Object.freeze({
-  sliderMinMs: 50,
-  sliderMaxMs: 2000,
+  sliderMinMs: base / 2,
+  sliderMaxMs: Math.max(...presets) * 2,
   fieldMinMs: 0,
-  fieldMaxMs: 25000,
+  fieldMaxMs: niceCeiling(largestResponse * 1.25),
 });
 
-/** Umbrales de los escenarios comparativos; los dos primeros son casos educativos. */
-export const scenarioThresholdsMs = [50, 100, 300, 500, 1000] as const;
-
-const decimalPattern = /^-?\d+([.,]\d{1,2})?$/;
+/** Escenarios comparativos: bajo el tiempo base, en él y los umbrales configurados. */
+export const scenarioThresholdsMs: readonly number[] = [base / 2, base, ...presets];
 
 export function parseThreshold(text: string): MathResult<number> {
-  const trimmed = text.trim();
-  if (!decimalPattern.test(trimmed))
-    return failure(
-      'non-finite',
-      'Escriba un número sin separador de miles y con un máximo de dos decimales.',
-    );
-  // La suma normaliza -0.
-  const value = Number(trimmed.replace(',', '.')) + 0;
-  const finite = validateFinite(value, 'El umbral');
-  if (!finite.ok) return finite;
-  if (value < thresholdRange.fieldMinMs)
+  const parsed = parseDecimal(text);
+  if (!parsed.ok) return parsed;
+  if (parsed.value < thresholdRange.fieldMinMs)
     return failure('negative-value', 'Un tiempo de respuesta no puede ser negativo.');
-  if (value > thresholdRange.fieldMaxMs)
+  if (parsed.value > thresholdRange.fieldMaxMs)
     return failure(
       'outside-domain',
       `El laboratorio admite umbrales de hasta ${thresholdRange.fieldMaxMs} ms.`,
     );
-  return finite;
+  return parsed;
 }

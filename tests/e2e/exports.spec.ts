@@ -65,6 +65,8 @@ async function expectNoOverflow(page: Page) {
 }
 
 async function download(page: Page, scope: Page | Locator, format: 'PNG' | 'SVG' | 'CSV') {
+  // La pestaña auxiliar de inspección deja ésta en segundo plano; Edge la pausa.
+  await page.bringToFront();
   await scope.getByRole('radio', { name: new RegExp(`^${format}`) }).check();
   const waiting = page.waitForEvent('download');
   await scope.getByRole('button', { name: `Descargar ${format}` }).click();

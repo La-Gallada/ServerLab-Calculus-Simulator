@@ -181,13 +181,6 @@ main {
   max-width: 76rem;
   margin: 0 auto;
 }
-.page-header {
-  display: flex;
-  justify-content: space-between;
-  gap: 1.5rem;
-  padding: 1rem 0 clamp(1.75rem, 4vw, 3rem);
-  border-bottom: 1px solid var(--sl-border);
-}
 h1,
 h2,
 p {
@@ -204,16 +197,6 @@ h2 {
   margin: 0;
   font-size: clamp(1.3rem, 2vw, 1.7rem);
   letter-spacing: -0.02em;
-}
-.page-header__description {
-  max-width: 48rem;
-  margin: 0;
-  color: var(--sl-muted);
-  font-size: 1.05rem;
-  line-height: 1.65;
-}
-.page-header__meta {
-  padding-top: 0.3rem;
 }
 .badge {
   display: inline-flex;
@@ -247,51 +230,6 @@ h2 {
   border-radius: var(--sl-radius);
   background: linear-gradient(145deg, rgb(29 43 66 / 0.94), rgb(16 26 46 / 0.94));
   box-shadow: var(--sl-shadow);
-}
-.placeholder-card {
-  margin-top: clamp(1.5rem, 4vw, 3rem);
-  padding: clamp(1.25rem, 4vw, 2.5rem);
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 1.2rem 1.5rem;
-  align-items: center;
-}
-.placeholder-card__visual {
-  width: 5.5rem;
-  height: 5.5rem;
-  padding: 0.55rem;
-  border: 1px solid rgb(56 189 248 / 0.3);
-  border-radius: 1.15rem;
-  display: grid;
-  place-items: center;
-  color: var(--sl-cyan);
-  background: rgb(56 189 248 / 0.08);
-  overflow: hidden;
-}
-.placeholder-card__visual img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
-}
-.placeholder-card p:not(.eyebrow) {
-  margin: 0.65rem 0 0;
-  color: var(--sl-muted);
-  line-height: 1.6;
-}
-.placeholder-card__notice {
-  grid-column: 1 / -1;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.8rem 1rem;
-  border-left: 3px solid var(--sl-violet);
-  border-radius: 0.45rem;
-  color: #ddd6fe;
-  background: rgb(139 92 246 / 0.1);
-  font-size: 0.9rem;
-}
-.placeholder-card__notice svg {
-  flex: none;
 }
 .text-link {
   grid-column: 1 / -1;
@@ -399,26 +337,18 @@ h2 {
   .app-header {
     padding-inline: 1rem;
   }
+  /* Oculto a la vista, disponible para lectores de pantalla. */
   .app-header__status span {
-    display: none;
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip-path: inset(50%);
+    white-space: nowrap;
   }
   .app-footer {
     flex-direction: column;
     padding: 1rem;
-  }
-  .page-header {
-    flex-direction: column;
-    gap: 0.9rem;
-  }
-  .page-header__meta {
-    padding-top: 0;
-  }
-  .placeholder-card {
-    grid-template-columns: 1fr;
-  }
-  .placeholder-card__visual {
-    width: 4.5rem;
-    height: 4.5rem;
   }
 }
 @media (max-width: 430px) {
@@ -430,9 +360,6 @@ h2 {
   }
   .app-header__kicker {
     font-size: 0.68rem;
-  }
-  .placeholder-card {
-    padding: 1.15rem;
   }
   .app-footer {
     font-size: 0.72rem;
@@ -967,6 +894,8 @@ h2 {
 }
 .procedure-card ol {
   display: grid;
+  grid-template-columns: minmax(0, 1fr);
+  list-style: decimal;
   gap: 0.6rem;
   margin: 0.5rem 0 0;
   padding-left: 1.35rem;
@@ -990,6 +919,7 @@ h2 {
 }
 .systems-card ul {
   display: grid;
+  list-style: disc;
   gap: 0.55rem;
   margin: 0.9rem 0;
   padding-left: 1.2rem;
@@ -1488,6 +1418,9 @@ h2 {
 .integrals-lab .table-scroll:focus-visible {
   outline: none;
   box-shadow: var(--sl-focus);
+}
+.limit-control__message {
+  min-height: 3.4rem;
 }
 .limit-control__hint,
 .limit-control__error {
@@ -2494,4 +2427,152 @@ h2 {
   .export-dialog {
     padding: 0.85rem;
   }
+}
+
+/* Auditoría M09: numeración, navegación, carga y Acerca de */
+.procedure-card li::marker {
+  font-weight: 750;
+}
+.procedure-card h3 {
+  margin: 1rem 0 0;
+  font-size: 0.92rem;
+}
+.skip-link {
+  position: fixed;
+  top: 0.5rem;
+  left: 0.5rem;
+  z-index: 40;
+  border: 0;
+  border-radius: 0.55rem;
+  padding: 0.6rem 0.9rem;
+  background: var(--sl-cyan);
+  color: #04111c;
+  font-weight: 700;
+  transform: translateY(-200%);
+}
+.skip-link:focus {
+  transform: none;
+}
+.skip-link:not(:focus) {
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip-path: inset(50%);
+  padding: 0;
+}
+main:focus {
+  outline: none;
+}
+/* Aparece sólo si la descarga tarda, para evitar parpadeos. */
+.route-loading {
+  min-height: 60vh;
+  margin: 0;
+  color: var(--sl-muted);
+  animation: route-loading-in 120ms ease 150ms both;
+}
+@keyframes route-loading-in {
+  from {
+    opacity: 0;
+  }
+}
+.route-error,
+.not-found {
+  display: grid;
+  justify-items: start;
+  gap: 0.9rem;
+  max-width: 44rem;
+  margin: 0 auto;
+  padding: 1.5rem;
+}
+.route-error h1,
+.not-found h1 {
+  max-width: none;
+  margin: 0;
+  font-size: 1.6rem;
+}
+.route-error p,
+.not-found p {
+  margin: 0;
+  color: var(--sl-muted);
+  line-height: 1.55;
+}
+.not-found > svg {
+  color: var(--sl-cyan);
+}
+.about {
+  max-width: 76rem;
+  margin: 0 auto;
+}
+.about-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 1rem;
+}
+.about-grid > section {
+  min-width: 0;
+  padding: 1.15rem;
+}
+.about-wide {
+  grid-column: 1 / -1;
+}
+.about h2 {
+  margin-bottom: 0.6rem;
+  font-size: 1.1rem;
+}
+.about p,
+.about li,
+.about dd {
+  color: #c8d5eb;
+  font-size: 0.88rem;
+  line-height: 1.6;
+}
+.about ul {
+  display: grid;
+  gap: 0.4rem;
+  margin: 0;
+  padding-left: 1.2rem;
+  list-style: disc;
+}
+.about .about-modules {
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  padding: 0;
+  list-style: none;
+}
+.about-modules a {
+  display: block;
+  color: var(--sl-cyan);
+  font-weight: 750;
+}
+.about-technologies {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 0.75rem;
+  margin: 0;
+}
+.about-technologies dt {
+  font-weight: 750;
+}
+.about-technologies dd {
+  margin: 0.15rem 0 0;
+}
+@media (max-width: 800px) {
+  .about-grid {
+    grid-template-columns: minmax(0, 1fr);
+  }
+  /* El menú cerrado no debe recibir el foco del teclado. */
+  .sidebar:not(.sidebar--open) {
+    visibility: hidden;
+  }
+  .sidebar {
+    transition:
+      transform 180ms ease,
+      visibility 180ms;
+  }
+}
+
+/* Marcas de los ejes con contraste suficiente sobre el fondo oscuro. */
+.recharts-cartesian-axis-tick-value {
+  /* Recharts fija el color en un estilo en línea. */
+  fill: var(--sl-muted) !important;
+  font-size: 0.75rem;
 }

@@ -1,6 +1,9 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { App } from '../../app/App';
+import { preloadRoutes } from '../../app/routes';
+
+beforeAll(preloadRoutes);
 
 function renderLab(hash = '#/optimizacion') {
   window.location.hash = hash;
@@ -134,9 +137,9 @@ describe('laboratorio de optimización', () => {
   });
 
   it.each([
-    ['', 'Escriba un número'],
-    ['abc', 'Escriba un número'],
-    ['1.000', 'sin separador de miles'],
+    ['', 'Escriba un número válido'],
+    ['abc', 'Escriba un número válido'],
+    ['1.000', 'es ambiguo'],
     ['-5', 'no puede ser negativo'],
     ['30000', 'hasta 25000 ms'],
   ])('no propaga la entrada «%s»', (value, message) => {

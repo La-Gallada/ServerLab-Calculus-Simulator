@@ -1,42 +1,30 @@
-import { lazy, Suspense } from 'react';
-import { Route, Routes } from 'react-router';
-import { SectionPlaceholder } from '../components/ui/SectionPlaceholder';
-import { pages } from '../config/pages';
+import { Suspense } from 'react';
+import { Route, Routes, useLocation } from 'react-router';
+import { NotFound } from '../components/ui/NotFound';
 import { Dashboard } from '../features/dashboard/Dashboard';
-import { LimitsLab } from '../features/limits/LimitsLab';
-import { DerivativesLab } from '../features/derivatives/DerivativesLab';
-import { IntegralsLab } from '../features/integrals/IntegralsLab';
-import { OptimizationLab } from '../features/optimization/OptimizationLab';
+import { RouteBoundary } from './RouteBoundary';
+import { deferredRoutes } from './routes';
 
-// El generador de figuras se carga sólo al visitar el centro o al exportar.
-const ExportCenter = lazy(() =>
-  import('../features/exports/ExportCenter').then((module) => ({ default: module.ExportCenter })),
+const loading = (
+  <p className="route-loading" role="status">
+    Cargando la sección…
+  </p>
 );
 
 export function AppRouter() {
+  const { pathname } = useLocation();
   return (
-    <Routes>
-      <Route path="/" element={<Dashboard />} />
-      <Route path="/limites" element={<LimitsLab />} />
-      <Route path="/derivadas" element={<DerivativesLab />} />
-      <Route path="/integrales" element={<IntegralsLab />} />
-      <Route path="/optimizacion" element={<OptimizationLab />} />
-      <Route
-        path="/exportaciones"
-        element={
-          <Suspense fallback={<p role="status">Cargando el centro de exportaciones…</p>}>
-            <ExportCenter />
-          </Suspense>
-        }
-      />
-      {pages.map((page) =>
-        ['/', '/limites', '/derivadas', '/integrales', '/optimizacion', '/exportaciones'].includes(
-          page.path,
-        ) ? null : (
-          <Route key={page.path} path={page.path} element={<SectionPlaceholder page={page} />} />
-        ),
-      )}
-      <Route path="*" element={<SectionPlaceholder variant="not-found" />} />
-    </Routes>
+    // La clave reinicia el estado de error al cambiar de ruta.
+    <RouteBoundary key={pathname}>
+      <Suspense fallback={loading}>
+        <Routes>
+          <Route path="/" element={<Dashboard />} />
+          {deferredRoutes.map(({ path, Route: Screen }) => (
+            <Route key={path} path={path} element={<Screen />} />
+          ))}
+          <Route path="*" element={<NotFound />} />
+        </Routes>
+      </Suspense>
+    </RouteBoundary>
   );
 }

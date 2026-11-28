@@ -1,6 +1,9 @@
 import { fireEvent, render, screen } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { App } from './App';
+import { preloadRoutes } from './routes';
+
+beforeAll(preloadRoutes);
 
 function renderAt(hash = '#/') {
   window.location.hash = hash;

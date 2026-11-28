@@ -39,7 +39,9 @@ Para un umbral `L` en ms, se resuelve `R(n)≤L`:
 n\le\frac{100(L-100)}{L+100}
 \]
 
-Para usuarios enteros: si `L < 100`, no hay carga factible; si `L = 100`, sólo `n=0`; en otro caso se usa el piso de la expresión y se limita a 99.
+Para usuarios enteros: si `L < 100`, no hay carga factible; si `L = 100`, sólo `n=0`; en otro caso el máximo es el piso de la expresión, limitado a 99.
+
+Nota de implementación (M09): en coma flotante el piso de la expresión puede quedar un usuario por debajo en L = R(n). El motor obtiene por ello el mayor entero con R(m) ≤ L mediante búsqueda binaria sobre R; la expresión se usa para la frontera continua. El modelo no cambia. Un umbral negativo es una entrada inválida.
 
 ## Validación independiente
 

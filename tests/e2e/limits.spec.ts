@@ -50,7 +50,7 @@ test('valida el laboratorio de límites y genera evidencia en Chromium', async (
   await expectNoHorizontalOverflow(page);
   await page.screenshot({ path: `${evidence}/limits-capacity-approach.png` });
 
-  await page.getByRole('button', { name: '0,01' }).click();
+  await page.getByRole('button', { name: '0,01', exact: true }).click();
   await expect(page.getByText('n = 99,99')).toBeVisible();
   await expect(page.locator('body')).not.toContainText('NaN');
   await expect(page.locator('body')).not.toContainText('Infinity');

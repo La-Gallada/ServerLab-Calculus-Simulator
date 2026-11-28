@@ -17,6 +17,7 @@
 | Despliegue                                                                                                        | REQUIERE AUTORIZACIÓN |
 | Operaciones destructivas de Git (reset --hard, clean, rebase o amend de historial, force push, descartar cambios) | NO AUTORIZADAS        |
 
+- `main` está publicada en un repositorio público y un push puede actualizar el sitio de Cloudflare Pages: tratar todo contenido confirmado como publicable.
 - Cada milestone termina con un commit local independiente, sólo después de: completar la implementación, ejecutar las validaciones obligatorias, corregir errores bloqueantes, generar evidencias, actualizar documentación, obtener veredicto GO y revisar los archivos preparados.
 - Usar Conventional Commits en inglés, con el identificador del milestone, funcionalidades, decisiones, correcciones, documentación, resultados reales de pruebas y limitaciones. Sin mensajes genéricos. Documentación académica e interfaz en español.
 - Previstos: `feat(exports): implement academic figure export system (M08)`, `perf(serverlab): optimize performance and resolve audit findings (M09)`, `chore(release): prepare ServerLab for production deployment (M10)`. Adaptarlos al trabajo realmente realizado; en correcciones usar fix, perf, refactor, test, docs o chore.

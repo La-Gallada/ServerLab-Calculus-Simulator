@@ -27,7 +27,7 @@ it('actualiza el límite, tabla y muestra al aproximarse a la capacidad', () => 
   fireEvent.click(screen.getByRole('radio', { name: /Capacidad/ }));
   expect(screen.getByText('+∞')).toBeInTheDocument();
   expect(screen.getByRole('row', { name: /99,99/ })).toBeInTheDocument();
-  fireEvent.click(screen.getByRole('button', { name: 'Seleccionar distancia 0.01' }));
+  fireEvent.click(screen.getByRole('button', { name: 'Seleccionar distancia 0,01' }));
   expect(screen.getByText('n = 99,99')).toBeInTheDocument();
   expect(screen.getAllByText(/R\(n\) = 1/)).toHaveLength(2);
 });

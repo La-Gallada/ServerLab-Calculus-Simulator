@@ -140,7 +140,9 @@ test('valida el laboratorio de integrales y genera evidencia real', async ({ pag
   await page.keyboard.press('Tab');
   await expect(page.getByRole('textbox', { name: 'Valor exacto de a (s)' })).toBeFocused();
   await page.getByRole('textbox', { name: 'Valor exacto de a (s)' }).fill('7,25');
+  await page.getByRole('textbox', { name: 'Valor exacto de a (s)' }).press('Enter');
   await page.getByRole('textbox', { name: 'Valor exacto de b (s)' }).fill('22,75');
+  await page.getByRole('textbox', { name: 'Valor exacto de b (s)' }).press('Enter');
   await expect(metrics(page)).toHaveText(['124 MB', '15,5 s', '6,45 MB/s', '9,55 MB/s']);
   await expectAreaBetweenLimits(page);
   await upper.focus();
@@ -154,8 +156,11 @@ test('valida el laboratorio de integrales y genera evidencia real', async ({ pag
   const upperField = page.getByRole('textbox', { name: 'Valor exacto de b (s)' });
   await upperField.fill('');
   await upperField.pressSequentially('12,5');
+  await expect(upper).toHaveValue('7.25');
+  await upperField.press('Enter');
   await expect(upper).toHaveValue('12.5');
   await upperField.fill('99');
+  await upperField.press('Enter');
   await expect(page.getByRole('alert')).toContainText('excede el intervalo');
   await expect(upper).toHaveValue('12.5');
 
@@ -164,8 +169,8 @@ test('valida el laboratorio de integrales y genera evidencia real', async ({ pag
   await expect(page.getByRole('alert')).toHaveCount(0);
 
   // Representación de tasa en un intervalo interior.
-  await page.getByRole('button', { name: 'Fijar 5 s como límite inferior a' }).click();
-  await page.getByRole('button', { name: 'Fijar 15 s como límite superior b' }).click();
+  await page.getByRole('button', { name: 'Fijar a en 5 s (límite inferior)' }).click();
+  await page.getByRole('button', { name: 'Fijar b en 15 s (límite superior)' }).click();
   await expect(metrics(page)).toHaveText(['70 MB', '10 s', '6 MB/s', '8 MB/s']);
   await expectAreaBetweenLimits(page);
   await showMetricsAtTop(page);

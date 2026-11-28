@@ -1,6 +1,9 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
-import { beforeEach, describe, expect, it } from 'vitest';
+import { beforeAll, beforeEach, describe, expect, it } from 'vitest';
 import { App } from '../../app/App';
+import { preloadRoutes } from '../../app/routes';
+
+beforeAll(preloadRoutes);
 
 function open(hash = '#/exportaciones') {
   window.location.hash = hash;

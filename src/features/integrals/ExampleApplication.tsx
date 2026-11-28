@@ -36,7 +36,18 @@ export function ExampleApplication({
   const atB = accumulatedData(b);
   const total = transferredData(a, b);
   if (!atA.ok || !atB.ok || !total.ok)
-    return <p role="alert">No fue posible calcular la aplicación académica {number}.</p>;
+    return (
+      <Card className="procedure-card example-card" data-figure-id={figureId}>
+        <p className="eyebrow">Aplicación académica {number}</p>
+        <h2>
+          Ejemplo [{a}, {b}] no disponible
+        </h2>
+        <p role="note">
+          Este ejemplo académico fijo no es válido con la configuración actual del modelo:{' '}
+          {total.ok ? 'no fue posible evaluarlo.' : total.error.message}
+        </p>
+      </Card>
+    );
   const interval = `[${a}, ${b}]`;
   const fromStart = a === 0;
 

@@ -1,4 +1,5 @@
 import { mathModelConfig } from '../config/model';
+import { parseDecimal } from '../features/shared/numberInput';
 import { failure, success, type MathResult } from '../math';
 import {
   firstDerivativeFigure,
@@ -70,15 +71,11 @@ export function validateParameter(
   return success(value);
 }
 
-/** Lee el texto de un campo numérico: punto o coma y hasta dos decimales. */
+/** Lee el texto de un campo numérico con las mismas reglas que los laboratorios. */
 export function parseParameter(spec: ParameterSpec, text: string): MathResult<number | string> {
-  const trimmed = text.trim();
-  if (!/^-?\d+([.,]\d{1,2})?$/.test(trimmed))
-    return failure(
-      'non-finite',
-      `${spec.label}: escriba un número sin separador de miles y con un máximo de dos decimales.`,
-    );
-  return validateParameter(spec, Number(trimmed.replace(',', '.')) + 0);
+  const parsed = parseDecimal(text);
+  if (!parsed.ok) return failure(parsed.error.code, `${spec.label}: ${parsed.error.message}`);
+  return validateParameter(spec, parsed.value);
 }
 
 /** Resuelve una figura con sus parámetros validados y los datos del motor. */

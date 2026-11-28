@@ -98,3 +98,7 @@ Sólo se verificó en Chromium. No se probó la inserción en Google Docs, Word,
 2. Elegir figura y parámetros; mantener tema Académico, PNG y alta resolución.
 3. Descargar la imagen y copiar la ficha.
 4. Insertar la imagen, asignar la numeración del documento y añadir la nota.
+
+## Cambios de M09
+
+Los campos del centro comparten la lectura regional de los laboratorios (miles con espacio; punto o coma de millares, ambiguos). El centro y el panel siguen siendo diferidos. La optimización exportada usa el máximo entero corregido.

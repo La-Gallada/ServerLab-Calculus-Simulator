@@ -6,7 +6,11 @@ Aplicación web educativa para el Proyecto de Investigación #4 de **Cálculo I*
 
 ## Estado
 
-Hasta M08 están completos el Dashboard, los laboratorios de Límites, Derivadas, Integrales y Optimización, y la exportación de figuras académicas (PNG, SVG y CSV en `/#/exportaciones`; ver [docs/EXPORT-SYSTEM.md](docs/EXPORT-SYSTEM.md)); el motor matemático central continúa siendo provisional e hipotético.
+Sitio publicado: <https://serverlab-calculus-simulator.pages.dev/#/> (la versión publicada puede ir por detrás de la rama local). Hasta M09 están completos la auditoría final, el Dashboard, los laboratorios de Límites, Derivadas, Integrales y Optimización, y la exportación de figuras académicas (PNG, SVG y CSV en `/#/exportaciones`; ver [docs/EXPORT-SYSTEM.md](docs/EXPORT-SYSTEM.md)); el motor matemático central continúa siendo provisional e hipotético.
+
+## Auditoría
+
+[Hallazgos](docs/AUDIT-FINAL.md) · [rendimiento](docs/PERFORMANCE-REPORT.md) · [revisión previa al push](docs/PRE-PUSH-REVIEW.md).
 
 ## Versionado
 
@@ -14,8 +18,8 @@ Cada milestone finaliza con un commit local en formato Conventional Commits. El 
 
 ## Requisitos
 
-- Node.js 20.19 o superior (M01 se verificó con Node 24.19.0).
-- npm 10 o superior (M01 se verificó con npm 11.17.0).
+- Node.js `^22.22.2`, `^24.15.0` o `>=26.0.0`; `.node-version` indica 24.19.0, la versión verificada.
+- npm 10 o superior (verificado con 11.17.0).
 
 ## Instalación y uso
 

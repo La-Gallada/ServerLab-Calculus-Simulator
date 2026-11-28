@@ -18,6 +18,7 @@ import {
   transferCurve,
 } from '../../math';
 import { mathModelConfig } from '../../config/model';
+import { capacityUsers, lastOperationalUser, maximumTransferSeconds } from '../../config/domain';
 import { useSimulation } from '../../state/useSimulation';
 import { responseViews, type ResponseView } from './responseViews';
 import { ExportButton } from '../exports/ExportButton';
@@ -75,7 +76,7 @@ export function Dashboard() {
     return result.ok ? result.value : [];
   }, [view]);
   const derivativeSeries = useMemo(() => {
-    const result = derivativeCurve(1, 0, 99, 100);
+    const result = derivativeCurve(1, 0, lastOperationalUser, lastOperationalUser + 1);
     return result.ok ? result.value : [];
   }, []);
   const transferSeries = useMemo(() => {
@@ -89,8 +90,7 @@ export function Dashboard() {
   if (!snapshot)
     return <p role="alert">No fue posible calcular la simulación con las entradas actuales.</p>;
   const withinObjective = snapshot.meetsResponseObjective;
-  const capacityPercent =
-    (input.concurrentUsers / mathModelConfig.response.referenceCapacityUsers) * 100;
+  const capacityPercent = (input.concurrentUsers / capacityUsers) * 100;
   const userMargin = maxUsers - input.concurrentUsers;
 
   return (
@@ -167,28 +167,29 @@ export function Dashboard() {
           </div>
           <div className="chart-wrap">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={responseSeries} margin={{ top: 14, right: 18, left: 0, bottom: 8 }}>
+              <LineChart data={responseSeries} margin={{ top: 8, right: 26, left: 8, bottom: 18 }}>
                 <CartesianGrid strokeDasharray="3 3" stroke="rgba(148,163,184,.18)" />
                 <XAxis
                   dataKey="users"
                   type="number"
-                  domain={[0, 100]}
+                  domain={[0, capacityUsers]}
                   tickFormatter={(value) => `${value}`}
                   label={{
                     value: 'Usuarios concurrentes',
                     position: 'insideBottom',
-                    offset: -2,
+                    offset: -12,
                     fill: '#c8d5eb',
                   }}
                 />
                 <YAxis
                   dataKey="responseMs"
-                  width={72}
-                  tickFormatter={(value) => `${Math.round(value)} ms`}
+                  width={76}
+                  tickFormatter={(value) => `${Math.round(value)}`}
                   label={{
-                    value: 'Tiempo de respuesta',
+                    value: 'Tiempo de respuesta (ms)',
                     angle: -90,
                     position: 'insideLeft',
+                    style: { textAnchor: 'middle' },
                     fill: '#c8d5eb',
                   }}
                 />
@@ -201,7 +202,7 @@ export function Dashboard() {
                     borderRadius: 10,
                   }}
                 />
-                <Legend />
+                <Legend verticalAlign="top" height={32} />
                 <ReferenceLine
                   y={input.thresholdMs}
                   stroke="#f59e0b"
@@ -214,7 +215,16 @@ export function Dashboard() {
                   strokeDasharray="5 5"
                   name="Máximo entero"
                 />
-                <ReferenceLine x={100} stroke="#ef4444" strokeDasharray="3 3" label="C=100" />
+                <ReferenceLine
+                  x={capacityUsers}
+                  stroke="#ef4444"
+                  strokeDasharray="3 3"
+                  label={{
+                    value: `C=${capacityUsers}`,
+                    position: 'insideTopRight',
+                    fill: '#fca5a5',
+                  }}
+                />
                 <Line
                   type="monotone"
                   dataKey="responseMs"
@@ -258,7 +268,7 @@ export function Dashboard() {
               aria-label="Usuarios concurrentes"
               type="range"
               min="0"
-              max="99"
+              max={lastOperationalUser}
               step="1"
               value={input.concurrentUsers}
               onChange={(event) => update({ concurrentUsers: Number(event.target.value) })}
@@ -271,7 +281,7 @@ export function Dashboard() {
               aria-label="Duración de transferencia"
               type="range"
               min="0"
-              max="30"
+              max={maximumTransferSeconds}
               step="1"
               value={input.transferTimeSeconds}
               onChange={(event) =>
@@ -394,6 +404,7 @@ export function Dashboard() {
           </div>
           <div
             className="load-bar"
+            role="img"
             aria-label={`Carga actual ${input.concurrentUsers} de máximo ${maxUsers}`}
           >
             <span

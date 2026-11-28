@@ -39,7 +39,16 @@ export function ScenarioApplication({
   const result = solveThreshold(thresholdMs);
   const reference = compareWithMs === undefined ? null : solveThreshold(compareWithMs);
   if (!result.ok || result.value.kind !== 'feasible')
-    return <p role="alert">No fue posible resolver la aplicación académica {number}.</p>;
+    return (
+      <Card className="procedure-card opt-example" data-figure-id={figureId}>
+        <p className="eyebrow">Aplicación académica {number}</p>
+        <h2>Escenario de {formatters.milliseconds(thresholdMs)} no disponible</h2>
+        <p role="note">
+          Este ejemplo académico fijo no tiene solución factible con la configuración actual del
+          modelo.
+        </p>
+      </Card>
+    );
   const solution = result.value;
   const { maximumIntegerUsers: maximum, responseAtNextUserMs: next } = solution;
   const comparison = reference?.ok && reference.value.kind === 'feasible' ? reference.value : null;

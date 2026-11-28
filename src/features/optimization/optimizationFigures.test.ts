@@ -197,6 +197,9 @@ describe('validación del campo de umbral', () => {
     ['300.25', 300.25],
     ['0', 0],
     ['25000', 25000],
+    ['1 000', 1000],
+    ['1 000,5', 1000.5],
+    ['19 900', 19900],
   ])('acepta «%s»', (text, expected) => expect(valueOf(parseThreshold(text))).toBe(expected));
 
   it.each([
@@ -207,6 +210,9 @@ describe('validación del campo de umbral', () => {
     ['1.000', 'non-finite'],
     ['500,', 'non-finite'],
     ['9'.repeat(400), 'non-finite'],
+    ['1 00', 'non-finite'],
+    ['1.000,5', 'non-finite'],
+    ['1,000', 'non-finite'],
     ['-5', 'negative-value'],
     ['25000,01', 'outside-domain'],
   ])('rechaza «%s»', (text, code) =>

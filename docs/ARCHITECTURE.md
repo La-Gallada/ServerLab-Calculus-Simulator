@@ -47,6 +47,10 @@ El módulo consume `responseTime`, `responseCurve`, `limitAtZeroFromRight`, `lim
 
 `tests/e2e/evidence.ts` escribe en `docs/evidence/<hito>` sólo si `EVIDENCE=<hito>`; en otro caso usa `test-results/evidence/<hito>`.
 
+## Carga diferida y armazón (M09)
+
+El Dashboard está en el fragmento inicial; las demás pantallas se declaran en `src/app/routes.ts` con `lazyRoute`, que permite precargarlas en pruebas. `RouteBoundary` ofrece recargar si un fragmento no puede descargarse, por ejemplo tras una publicación nueva. `AppLayout` gestiona título, foco, posición y menú móvil. Los campos numéricos comparten `src/features/shared/`. Los iconos de `public/` derivan del isotipo de `assets/`.
+
 ## Navegación
 
 Se usa `HashRouter` para que una futura publicación estática no dependa de reglas de reescritura del servidor. Rutas: `/`, `/limites`, `/derivadas`, `/integrales`, `/optimizacion`, `/exportaciones`, `/acerca` y un fallback para rutas inexistentes.

@@ -48,3 +48,9 @@
 | D-08-04 | Cargar el generador de forma diferida.                                                               | adoptada  | Limita el crecimiento del bundle principal.                                               |
 | D-08-05 | Paquete ZIP «store» propio.                                                                          | adoptada  | Evita dependencias y múltiples descargas.                                                 |
 | D-08-06 | Sustituye la estrategia D-01-04 en lo relativo a clonar gráficas; conserva las Web APIs.             | adoptada  | Ver D-08-01 y D-08-02.                                                                    |
+| D-09-01 | Obtener el máximo entero por búsqueda binaria sobre R, sin tolerancias.                              | adoptada  | Corrige 17 fronteras exactas; D-02 mantiene el motor como fuente única.                   |
+| D-09-02 | Diferir todas las pantallas salvo el Dashboard; sin `manualChunks`.                                  | adoptada  | −31 % de JavaScript inicial sin duplicar dependencias.                                    |
+| D-09-03 | Fijar versiones exactas, rango real de Node y `.node-version` 24.19.0.                               | adoptada  | Reproducibilidad local y en la compilación de Cloudflare.                                 |
+| D-09-04 | Forzar LF con `.gitattributes`.                                                                      | adoptada  | Independencia de `core.autocrlf`.                                                         |
+| D-09-05 | Aceptar miles con espacio y rechazar punto o coma de millares.                                       | adoptada  | Nunca interpretar en silencio un texto ambiguo.                                           |
+| D-09-06 | Usar derivados optimizados del logotipo e isotipo; conservar originales.                             | adoptada  | Reduce 1 MB inicial y añade favicon.                                                      |

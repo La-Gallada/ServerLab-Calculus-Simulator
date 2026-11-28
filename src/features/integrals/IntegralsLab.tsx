@@ -5,6 +5,7 @@ import { Button } from '../../components/ui/Button';
 import { Card } from '../../components/ui/Card';
 import { Formula } from '../../components/ui/Formula';
 import { mathModelConfig } from '../../config/model';
+import { evenSteps, maximumTransferSeconds } from '../../config/domain';
 import { accumulatedData, formatters, transferRate, transferredData } from '../../math';
 import { useSimulation } from '../../state/useSimulation';
 import { ExampleApplication } from './ExampleApplication';
@@ -23,7 +24,7 @@ import {
 import { LimitControl } from './LimitControl';
 import { ExportButton } from '../exports/ExportButton';
 
-const referenceTimes = [0, 5, 10, 15, 20, 25, 30] as const;
+const referenceTimes = evenSteps(maximumTransferSeconds, 6);
 
 const modes: { id: FigureKind; label: string; code: string }[] = [
   { id: 'rate', label: 'Tasa y área', code: 'I-01' },
@@ -58,8 +59,16 @@ export function IntegralsLab() {
     b: input.transferTimeSeconds,
   };
   const [{ a, b }, setInterval] = useState(initialInterval);
+  /** Cuenta las acciones que fijan el intervalo y descartan borradores de texto. */
+  const [revision, setRevision] = useState(0);
   const [mode, setMode] = useState<FigureKind>('rate');
-  const maximum = mathModelConfig.transfer.maximumTimeSeconds;
+  const maximum = maximumTransferSeconds;
+  const context = `${a}|${b}|${revision}`;
+
+  function chooseInterval(next: { a: number; b: number }) {
+    setInterval(next);
+    setRevision((current) => current + 1);
+  }
 
   const total = transferredData(a, b);
   const startRate = transferRate(a);
@@ -224,6 +233,7 @@ export function IntegralsLab() {
             allowed={{ min: 0, max: b }}
             validate={(candidate) => transferredData(candidate, b)}
             onCommit={(next) => setInterval((current) => ({ ...current, a: next }))}
+            context={context}
           />
           <LimitControl
             symbol="b"
@@ -232,8 +242,9 @@ export function IntegralsLab() {
             allowed={{ min: a, max: maximum }}
             validate={(candidate) => transferredData(a, candidate)}
             onCommit={(next) => setInterval((current) => ({ ...current, b: next }))}
+            context={context}
           />
-          <Button variant="secondary" onClick={() => setInterval(initialInterval)}>
+          <Button variant="secondary" onClick={() => chooseInterval(initialInterval)}>
             <RotateCcw aria-hidden="true" size={16} /> Reiniciar intervalo
           </Button>
           <p>
@@ -253,7 +264,7 @@ export function IntegralsLab() {
             startSeconds={example.startSeconds}
             endSeconds={example.endSeconds}
             isLoaded={a === example.startSeconds && b === example.endSeconds}
-            onLoad={() => setInterval({ a: example.startSeconds, b: example.endSeconds })}
+            onLoad={() => chooseInterval({ a: example.startSeconds, b: example.endSeconds })}
           />
         ))}
       </section>
@@ -304,17 +315,17 @@ export function IntegralsLab() {
                       <td>
                         <button
                           type="button"
-                          aria-label={`Fijar ${seconds} s como límite inferior a`}
+                          aria-label={`Fijar a en ${seconds} s (límite inferior)`}
                           disabled={seconds > b}
-                          onClick={() => setInterval({ a: seconds, b })}
+                          onClick={() => chooseInterval({ a: seconds, b })}
                         >
                           Fijar a
                         </button>{' '}
                         <button
                           type="button"
-                          aria-label={`Fijar ${seconds} s como límite superior b`}
+                          aria-label={`Fijar b en ${seconds} s (límite superior)`}
                           disabled={seconds < a}
-                          onClick={() => setInterval({ a, b: seconds })}
+                          onClick={() => chooseInterval({ a, b: seconds })}
                         >
                           Fijar b
                         </button>

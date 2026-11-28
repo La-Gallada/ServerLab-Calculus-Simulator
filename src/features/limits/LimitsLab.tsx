@@ -1,8 +1,6 @@
 import { useMemo, useState } from 'react';
 import { BookOpen, ChevronRight, Infinity as InfinityIcon, ServerCog } from 'lucide-react';
 import { Link } from 'react-router';
-import katex from 'katex';
-import 'katex/dist/katex.min.css';
 import {
   limitAtCapacityFromLeft,
   limitAtZeroFromRight,
@@ -12,6 +10,7 @@ import {
 } from '../../math';
 import { mathModelConfig } from '../../config/model';
 import { Card } from '../../components/ui/Card';
+import { Formula } from '../../components/ui/Formula';
 import { limitDistances as distances, limitWindow, type LimitCase } from './limitCases';
 import { ExportButton } from '../exports/ExportButton';
 import {
@@ -31,18 +30,6 @@ const formatContinuous = (value: number, maximumFractionDigits = 4) =>
 
 const formatResponse = (value: number) =>
   formatContinuous(Math.abs(value - Math.round(value)) < 0.00001 ? Math.round(value) : value, 6);
-
-function Formula({ expression, label }: { expression: string; label: string }) {
-  return (
-    <span
-      aria-label={label}
-      className="math-formula"
-      dangerouslySetInnerHTML={{
-        __html: katex.renderToString(expression, { throwOnError: false }),
-      }}
-    />
-  );
-}
 
 export function LimitsLab() {
   const [caseId, setCaseId] = useState<LimitCase>('zero');
@@ -73,18 +60,18 @@ export function LimitsLab() {
     : `\\lim_{n \\to ${capacity}^{-}} R(n) = +\\infty`;
   const procedure = isZero
     ? [
-        'Identificamos R(n) y su dominio continuo: 0 ≤ n < 100.',
-        'Al aproximarnos a 0 por la derecha, el denominador 100 − n no se anula.',
-        'Aplicamos sustitución directa: R(0) = 100 + (200 · 0)/(100 − 0).',
-        'El término fraccionario es 0, por lo que el resultado es 100 ms.',
+        `Identificamos R(n) y su dominio continuo: 0 ≤ n < ${capacity}.`,
+        `Al aproximarnos a 0 por la derecha, el denominador ${capacity} − n no se anula.`,
+        `Aplicamos sustitución directa: R(0) = ${base} + (${coefficient} · 0)/(${capacity} − 0).`,
+        `El término fraccionario es 0, por lo que el resultado es ${base} ms.`,
         'El límite representa el tiempo base del modelo hipotético con carga casi nula.',
       ]
     : [
-        'Estudiamos n acercándose a 100 exclusivamente por valores inferiores.',
-        'El numerador 200n se aproxima a un valor positivo cercano a 20 000.',
-        'El denominador 100 − n se aproxima a 0 mediante valores positivos.',
+        `Estudiamos n acercándose a ${capacity} exclusivamente por valores inferiores.`,
+        `El numerador ${coefficient}n se aproxima a un valor positivo cercano a ${formatContinuous(coefficient * capacity)}.`,
+        `El denominador ${capacity} − n se aproxima a 0 mediante valores positivos.`,
         'Un cociente positivo entre un valor positivo muy pequeño crece sin cota.',
-        'Por tanto, el límite es +∞ y n = 100 es una asíntota vertical, no una evaluación.',
+        `Por tanto, el límite es +∞ y n = ${capacity} es una asíntota vertical, no una evaluación.`,
         'Describe una saturación idealizada del modelo, no un tiempo medido en un servidor real.',
       ];
 
@@ -121,7 +108,10 @@ export function LimitsLab() {
             </div>
             <BookOpen aria-hidden="true" />
           </div>
-          <Formula expression={formula} label="R de n es 100 más 200 n entre 100 menos n" />
+          <Formula
+            expression={formula}
+            label={`R de n es ${base} más ${coefficient} n entre ${capacity} menos n`}
+          />
           <p>
             Dominio continuo: <strong>0 ≤ n &lt; {capacity}</strong>. R(n) se expresa en
             milisegundos y n representa usuarios concurrentes en la extensión matemática del modelo.
@@ -177,7 +167,7 @@ export function LimitsLab() {
           </div>
           <div className="limits-chart" aria-label="Gráfica del límite de tiempo de respuesta">
             <ResponsiveContainer width="100%" height="100%">
-              <LineChart data={curve} margin={{ top: 14, right: 22, left: 10, bottom: 8 }}>
+              <LineChart data={curve} margin={{ top: 8, right: 26, left: 8, bottom: 18 }}>
                 <CartesianGrid stroke="rgba(148,163,184,.18)" strokeDasharray="3 3" />
                 <XAxis
                   dataKey="users"
@@ -187,7 +177,7 @@ export function LimitsLab() {
                   label={{
                     value: 'Usuarios concurrentes (n)',
                     position: 'insideBottom',
-                    offset: -2,
+                    offset: -12,
                     fill: '#c8d5eb',
                   }}
                 />
@@ -195,12 +185,13 @@ export function LimitsLab() {
                   dataKey="responseMs"
                   scale={isZero ? 'auto' : 'log'}
                   domain={isZero ? ['auto', 'auto'] : ['auto', 'auto']}
-                  width={72}
-                  tickFormatter={(value) => `${formatContinuous(Number(value), 0)} ms`}
+                  width={76}
+                  tickFormatter={(value) => formatContinuous(Number(value), 0)}
                   label={{
-                    value: 'Tiempo de respuesta',
+                    value: 'Tiempo de respuesta (ms)',
                     angle: -90,
                     position: 'insideLeft',
+                    style: { textAnchor: 'middle' },
                     fill: '#c8d5eb',
                   }}
                 />
@@ -213,12 +204,12 @@ export function LimitsLab() {
                     borderRadius: 10,
                   }}
                 />
-                <Legend />
+                <Legend verticalAlign="top" height={32} />
                 <ReferenceLine
                   x={verticalAsymptote()}
                   stroke="#ef4444"
                   strokeDasharray="4 4"
-                  label="C = 100"
+                  label={{ value: `C = ${capacity}`, position: 'insideTopRight', fill: '#fca5a5' }}
                 />
                 <ReferenceLine x={selected.users} stroke="#f59e0b" strokeDasharray="5 4" />
                 {selected.responseMs !== null && (
@@ -238,7 +229,7 @@ export function LimitsLab() {
           </div>
           <p className="chart-note">
             {isZero
-              ? 'La escala lineal permite observar el acercamiento a 100 ms.'
+              ? `La escala lineal permite observar el acercamiento a ${base} ms.`
               : 'La escala logarítmica permite comparar valores muy grandes cerca de la asíntota sin alterar los datos.'}
           </p>
           <ExportButton
@@ -308,7 +299,7 @@ export function LimitsLab() {
                     <td>
                       <button
                         onClick={() => setSelectedDistance(row.distance)}
-                        aria-label={`Seleccionar distancia ${row.distance}`}
+                        aria-label={`Seleccionar distancia ${formatContinuous(row.distance, 2)}`}
                       >
                         {formatContinuous(row.distance, 2)}
                       </button>
@@ -333,8 +324,8 @@ export function LimitsLab() {
             expression={limitFormula}
             label={
               isZero
-                ? 'límite de R de n cuando n tiende a cero por la derecha es 100 milisegundos'
-                : 'límite de R de n cuando n tiende a 100 por la izquierda es infinito positivo'
+                ? `límite de R de n cuando n tiende a cero por la derecha es ${base} milisegundos`
+                : `límite de R de n cuando n tiende a ${capacity} por la izquierda es infinito positivo`
             }
           />
           <ol>
@@ -353,7 +344,7 @@ export function LimitsLab() {
             <h2>{isZero ? 'Tiempo base del modelo' : 'Margen antes de la capacidad'}</h2>
             <p>
               {isZero
-                ? 'El límite de 100 ms describe el valor base supuesto por el modelo cuando la carga se aproxima a cero. No afirma una medición real con cero usuarios.'
+                ? `El límite de ${base} ms describe el valor base supuesto por el modelo cuando la carga se aproxima a cero. No afirma una medición real con cero usuarios.`
                 : 'El crecimiento sin cota señala que se necesitan márgenes operativos antes de la capacidad de referencia. El infinito es un resultado matemático, no una métrica de un servidor real.'}
             </p>
           </div>
