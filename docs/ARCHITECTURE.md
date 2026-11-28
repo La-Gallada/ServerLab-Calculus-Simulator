@@ -59,7 +59,7 @@ Se usa `HashRouter` para que una futura publicación estática no dependa de reg
 
 Los tokens CSS viven en `src/styles/index.css`: color, radios, sombras, foco, transición y breakpoints. El `AppLayout` comparte sidebar, cabecera y footer; cada ruta obtiene un `SectionPlaceholder` que comunica su estado real.
 
-`assets/` conserva la extracción original del paquete, incluido `assets/README.md`. `public/assets/` contiene copias deliberadas para que Vite las sirva sin transformar. `references/mockup-option-01.png` queda fuera de `public/` y no se publica.
+`assets/` conserva la extracción original del paquete, incluido `assets/README.md`. `public/` contiene sólo lo que se publica: `_headers`, iconos, tarjeta social y el logotipo WebP (M10 retiró las copias PNG sin uso). `references/mockup-option-01.png` queda fuera de `public/` y no se publica en el sitio.
 
 ## Laboratorio de derivadas de M05
 
@@ -72,3 +72,7 @@ R(n) y la recta tangente usan escala lineal para preservar el significado de la 
 `src/export/` es un núcleo sin React: un registro de figuras obtiene datos del motor y un único renderizador produce SVG para ambos temas; PNG, CSV y ficha derivan del mismo objeto. `src/features/exports/` aporta el centro `/exportaciones`, el diálogo de los laboratorios y los campos de parámetros. El centro y el panel se cargan de forma diferida.
 
 La estrategia prevista (clonar el SVG de Recharts) se sustituyó por un renderizador propio. Detalle en [EXPORT-SYSTEM.md](EXPORT-SYSTEM.md).
+
+## Producción (M10)
+
+`public/_headers` define la política de contenido y los demás encabezados. `scripts/serve-dist.mjs` sirve `dist` aplicando ese archivo y es el servidor de las pruebas E2E. Las fuentes no se incrustan como `data:` (`assetsInlineLimit` en `vite.config.ts`) para que `font-src 'self'` baste. `src/config/authorship.ts` centraliza autoría, aviso de no oficialidad y versión; `index.html` y los documentos repiten el texto porque no se generan desde código. El paquete académico se produce con `tests/e2e/academic-package.spec.ts` desde la propia aplicación.

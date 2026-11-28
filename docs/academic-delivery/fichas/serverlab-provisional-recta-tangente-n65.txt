@@ -1,0 +1,22 @@
+Título: Tiempo de respuesta y recta tangente en n = 65
+Descripción: Tiempo de respuesta y su recta tangente en el punto seleccionado, cuya pendiente es la primera derivada.
+Variables y unidades:
+- n: usuarios concurrentes (usuarios)
+- R(n): tiempo de respuesta (ms)
+- y(n): recta tangente (ms)
+- R′(n): pendiente de la tangente (ms/usuario)
+Parámetros utilizados:
+- Punto de tangencia: 65 usuarios
+- Ventana: 0 a 80 usuarios
+Dominio: Extensión continua 0 ≤ n < 100; la operación usa enteros de 0 a 99. n = 100 no se evalúa.
+Modelo matemático:
+- R(n) = 100 + 200n/(100 − n), con 0 ≤ n < 100 (ms)
+- y(n) = R(a) + R′(a)(n − a)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Lineal en ambos ejes; conserva la pendiente. La tangente se recorta si sale del área de trazado.
+Resumen: La recta tangente toca R(n) en n = 65 con pendiente 16,3265 ms/usuario.
+
+Nota. Elaboración propia del Grupo #4 mediante ServerLab, a partir del modelo matemático hipotético del proyecto de investigación.
+Autoría: Desarrollado por el Grupo #4. Proyecto de Investigación de Cálculo I. Ingeniería en Sistemas. Universidad Latina de Costa Rica. III Cuatrimestre, 2026.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

@@ -1,40 +1,55 @@
 # Revisión previa al próximo push
 
-**Fecha:** 27 de noviembre de 2026.
+**Fecha:** 27 de noviembre de 2026 (actualizada en M10).
 
 ## Estado publicado
 
-- El propietario publicó `main` en `fda80eb`. El repositorio de GitHub es **público**; sin licencia y sin bifurcaciones al revisarlo.
-- Sitio: <https://serverlab-calculus-simulator.pages.dev/#/>. Al revisarlo servía los mismos archivos que la compilación de `fda80eb` (`index-CJi71Ogf.js`).
-- No se observaron comprobaciones ni despliegues de Cloudflare en GitHub, así que no se verificó cómo está conectado. Si usa despliegue automático, **un push a `main` actualizará el sitio público**.
-- Rutas como `/docs/…` o `/references/…` responden el `index.html`: esos archivos no se publican en el sitio.
-- No se modificó el remoto ni la configuración de Cloudflare.
+- `origin/main` y el sitio corresponden a `f644acf` (M09). Producción servía `index-6EYfUdMZ.js`, igual que la compilación local de ese commit.
+- El repositorio de GitHub es **público** y no tiene licencia.
+- Sitio: <https://serverlab-calculus-simulator.pages.dev/>. Un push a `main` puede actualizarlo.
+- Producción envía hoy sólo `referrer-policy`, `x-content-type-options` y valores por defecto de Cloudflare; la política de M10 aún no está activa.
+- No se modificaron el remoto ni la configuración de Cloudflare.
 
-## Historial local y publicado
+## 1. Seguridad técnica
 
-Se revisaron todos los commits: sin credenciales, tokens, claves privadas, archivos `.env`, rutas del equipo, PDF, documentos de terceros ni archivos temporales. Los PNG de evidencia no tienen metadatos. Los correos presentes en metadatos de imágenes pertenecen a la entidad de certificación (`trufo.ai`).
+Revisados el historial (al preparar M09) y los archivos de M09 y M10: sin credenciales, tokens, claves privadas, archivos `.env`, rutas del equipo, PDF ni documentos de terceros. M10 añade `public/_headers` y un servidor local de comprobación (`scripts/serve-dist.mjs`) que no se publica en el sitio.
 
-| ID   | Severidad | Hallazgo (ya publicado)                                                                                                                      | Estado                |
-| ---- | --------- | -------------------------------------------------------------------------------------------------------------------------------------------- | --------------------- |
-| PR-1 | Media     | Los commits registran el correo personal configurado en Git                                                                                  | PENDING (propietario) |
-| PR-2 | Baja      | `docs/SDD-00-PROJECT-CONTEXT.md` y la autoría de Git identifican al responsable por su nombre completo                                       | PENDING (propietario) |
-| PR-3 | Media     | `references/mockup-option-01.png` muestra el logotipo de la Universidad Latina; no consta autorización para distribuirlo                     | PENDING (propietario) |
-| PR-4 | Baja      | No hay licencia: el contenido es público sin condiciones de reutilización explícitas                                                         | PENDING (propietario) |
-| PR-5 | Baja      | Los recursos gráficos incluyen manifiestos C2PA que indican generación con IA (ChatGPT, `gpt-image`). Conviene revisar la política del curso | PENDING (propietario) |
-| PR-6 | —         | Las rutas locales de `AUDIT-00` se retiraron antes del primer commit                                                                         | RESOLVED              |
+## 2. Privacidad personal
 
-Opciones, ninguna ejecutada: usar el correo `noreply` de GitHub en commits futuros; sustituir el mockup en un commit nuevo (seguiría en el historial); pasar el repositorio a privado (no revierte copias ya hechas); reescribir el historial, sólo con autorización expresa.
+| ID   | Hallazgo                                                                                                                      | Estado en M10                                                                                | Alternativas (decide el propietario)                                                              |
+| ---- | ----------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------- |
+| PR-1 | Todos los commits, incluido el de M10, registran el correo personal configurado en Git                                        | PENDING. No se cambió la identidad                                                           | Correo `noreply` de GitHub en commits futuros; reescribir historial sólo con autorización expresa |
+| PR-2 | El nombre completo del propietario aparece en la autoría de Git y en versiones anteriores de `docs/SDD-00-PROJECT-CONTEXT.md` | Retirado de los archivos actuales, que identifican al **Grupo #4**. El historial lo conserva | Cambiar el nombre en commits futuros; el historial publicado no cambia sin reescritura            |
+| PR-7 | La cuenta u organización de GitHub y el dominio del sitio son visibles                                                        | Sin cambios                                                                                  | Revisar la visibilidad del perfil                                                                 |
 
-## Contenido del commit de M09
+No se incorporaron nombres de otros integrantes.
 
-Código, pruebas, documentación, iconos derivados del isotipo y capturas de `docs/evidence/M09/`. Sin secretos ni rutas personales.
+## 3. Derechos de distribución
+
+| ID   | Hallazgo                                                                                         | Archivos                          | Estado  | Alternativas                                                                                     |
+| ---- | ------------------------------------------------------------------------------------------------ | --------------------------------- | ------- | ------------------------------------------------------------------------------------------------ |
+| PR-3 | El mockup muestra el logotipo de la Universidad Latina; no consta autorización para distribuirlo | `references/mockup-option-01.png` | PENDING | Pedir autorización; retirarlo en un commit nuevo (seguiría en el historial); repositorio privado |
+| PR-4 | No hay licencia: el contenido es público sin condiciones de reutilización explícitas             | repositorio                       | PENDING | Mantener sin licencia (derechos reservados) o elegir una con acuerdo del grupo                   |
+| PR-8 | El push publicaría el paquete académico (figuras, CSV, fichas y QR)                              | `docs/academic-delivery/`         | PENDING | Publicarlo, o excluirlo antes del push y compartirlo por otro medio                              |
+
+Las dependencias de producción declaran licencias MIT, ISC y BSD-3-Clause. M10 no incorporó el logotipo universitario a ningún recurso nuevo. La tarjeta social (`public/og-image.png`) se compone con el isotipo propio y texto.
+
+## 4. Transparencia académica
+
+| ID    | Hallazgo                                                                                                                                                                                              | Estado  |
+| ----- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
+| PR-5  | Los gráficos originales de `assets/` incluyen manifiestos C2PA que declaran generación con IA (ChatGPT, `gpt-image`)                                                                                  | PENDING |
+| PR-9  | Los derivados publicados (logotipo WebP, iconos y tarjeta social) no llevan manifiesto C2PA. Al retirar en M10 las copias sin uso de `public/`, ningún archivo servido lo conserva; los originales sí | PENDING |
+| PR-10 | El repositorio documenta apoyo de agentes de programación (`AGENTS.md`, `CLAUDE.md`, líneas `Co-Authored-By`)                                                                                         | PENDING |
+
+La retirada de las copias fue por tamaño, no para ocultar su origen: no se eliminaron originales ni metadatos. Conviene confirmar la política del curso y declarar el uso de IA como corresponda.
+
+## Resueltos
+
+- PR-6: las rutas locales de `AUDIT-00` se retiraron antes del primer commit.
 
 ## Veredicto
 
-**Sin bloqueo técnico ni de secretos para un próximo push.** Ningún hallazgo exige reescribir el historial; PR-1 a PR-5 son decisiones del propietario, sobre contenido ya público.
+**Sin bloqueo técnico ni de secretos.** Ningún hallazgo exige reescribir el historial. PR-1 a PR-5 y PR-7 a PR-10 son decisiones del propietario o del grupo, varias sobre contenido ya público; **PR-8 conviene decidirlo antes del push**.
 
-Antes de publicar:
-
-1. M09 añade `.node-version` (24.19.0): Cloudflare usará esa versión en lugar de su predeterminada (22.23.4 según su documentación). No pudo probarse en Cloudflare.
-2. Si es posible, publicar primero en una rama para obtener una vista previa (requiere autorización).
-3. Tras publicar: comprobar carga, laboratorios, una descarga y el icono de la pestaña. Una pestaña abierta con la versión anterior puede pedir recargar.
+Pasos de publicación y comprobación: [RELEASE-CHECKLIST.md](RELEASE-CHECKLIST.md).

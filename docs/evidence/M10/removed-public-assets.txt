@@ -1,0 +1,12 @@
+Copias retiradas de public/ y original conservado (SHA-256 del original)
+
+public/assets/branding/serverlab-logo-full.png -> assets/branding/serverlab-logo-full.png 6a9fb2b8c6cb75aad7af826b3f71c11d5f08dd07ce43ee93a91886891ad05c91
+public/assets/branding/serverlab-logo-mark.png -> assets/branding/serverlab-logo-mark.png 9fdac6b8cd744d37956b729548e6ddd58443e7d22d384a54de5b3f1524a42928
+public/assets/buttons/button-about-project.png -> assets/buttons/button-about-project.png 450d622ba41e1b696ae27620cf3762e8825dd04b5ae2029e413d6bc480925aec
+public/assets/buttons/button-reset-simulation.png -> assets/buttons/button-reset-simulation.png 11e44c01d5029d96ad0c0afcda9a5c84460a4f845270c269e6d97022664793f8
+public/assets/buttons/button-start-simulation.png -> assets/buttons/button-start-simulation.png 31fd29053cb40045d80f5750f288ce7323a2745c0162a312e36f27eb46add34a
+public/assets/icons/icon-dashboard.png -> assets/icons/icon-dashboard.png 02106d1fba3cf0a824c8cc0d4ee3cbbedff1b14782749ec449543f7d87b3fe11
+public/assets/icons/icon-derivatives.png -> assets/icons/icon-derivatives.png dd31c4fb8d4968d5f956571bc510ded6325fcd7e08a552c092642d69f37f7b67
+public/assets/icons/icon-integrals.png -> assets/icons/icon-integrals.png b92e393adf93dfde22309178922abad54fa858daea5ea87fba8e22a196223bd0
+public/assets/icons/icon-limits.png -> assets/icons/icon-limits.png 6e6a784467514d726061d955ed92cfdd876400d4d98b0b1210ac1f274b565195
+public/assets/icons/icon-optimization.png -> assets/icons/icon-optimization.png a810723c269dd65b29c8875d1904c0f62e5641744b3372158af8ed9908bfbd50

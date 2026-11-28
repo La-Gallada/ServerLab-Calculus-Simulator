@@ -1,0 +1,17 @@
+Producción (sólo lectura), antes de publicar M10
+2026-11-28 04:40 UTC
+
+HTTP/1.1 200 OK
+Date: Sat, 28 Nov 2026 04:40:31 GMT
+Content-Type: text/html; charset=utf-8
+Connection: keep-alive
+Access-Control-Allow-Origin: *
+Cache-Control: public, max-age=0, must-revalidate
+referrer-policy: strict-origin-when-cross-origin
+x-content-type-options: nosniff
+Server: cloudflare
+alt-svc: h3=":443"; ma=86400
+
+
+Script principal servido:
+assets/index-6EYfUdMZ.js

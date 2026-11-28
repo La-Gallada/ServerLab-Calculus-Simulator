@@ -1,0 +1,9 @@
+﻿Usuarios (n) (usuarios);Tiempo de respuesta (ms);Umbral (ms);Estado
+63;440,5405405405405;500;factible
+64;455,55555555555554;500;factible
+65;471,42857142857144;500;factible
+66;488,2352941176471;500;máximo entero factible
+67;506,06060606060606;500;no factible
+68;525;500;no factible
+69;545,1612903225807;500;no factible
+70;566,6666666666667;500;no factible

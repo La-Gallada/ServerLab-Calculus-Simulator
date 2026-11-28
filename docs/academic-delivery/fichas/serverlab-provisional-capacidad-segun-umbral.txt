@@ -1,0 +1,23 @@
+Título: Relación entre el umbral de respuesta y la capacidad operativa máxima
+Descripción: Máximo entero de usuarios en función del tiempo de respuesta permitido.
+Variables y unidades:
+- n: usuarios concurrentes (usuarios)
+- R(n): tiempo de respuesta (ms)
+- L: tiempo máximo permitido (ms)
+- m: máximo entero factible (usuarios)
+Parámetros utilizados:
+- Umbral seleccionado: 500 ms
+Dominio: Umbrales de 50 ms a 2 000 ms; solución factible sólo con L ≥ 100 ms.
+Modelo matemático:
+- R(n) = 100 + 200n/(100 − n), con 0 ≤ n < 100 (ms)
+- Maximizar n sujeto a R(n) ≤ L, con n entero
+- Frontera continua (si L ≥ B): n* = C(L − B)/(L − B + k)
+- Máximo entero: m = mín(⌊n*⌋, C − 1)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Lineal en ambos ejes; escalones en los saltos exactos L = R(m).
+Resumen: La capacidad entera crece de forma escalonada con el umbral; con 500 ms permite 66 usuarios.
+
+Nota. Elaboración propia del Grupo #4 mediante ServerLab, a partir del modelo matemático hipotético del proyecto de investigación.
+Autoría: Desarrollado por el Grupo #4. Proyecto de Investigación de Cálculo I. Ingeniería en Sistemas. Universidad Latina de Costa Rica. III Cuatrimestre, 2026.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

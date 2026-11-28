@@ -75,7 +75,7 @@ UTF-8 con BOM (para que Excel reconozca los acentos), líneas CRLF y campos entr
 
 ## Ficha académica y nombres
 
-La ficha de texto reúne título, descripción, variables, parámetros, dominio, modelo, versión, escala, resumen, nota de elaboración propia y aclaración hipotética. No numera figuras ni cita fuentes externas.
+La ficha de texto reúne título, descripción, variables, parámetros, dominio, modelo, versión, escala, resumen, autoría (Grupo #4), nota de elaboración propia y aclaración hipotética. No numera figuras ni cita fuentes externas.
 
 Los archivos se llaman `serverlab-<descripción>[-tema-oscuro|-regional].<ext>`, en minúsculas ASCII; los decimales usan `p` (`7p25`).
 

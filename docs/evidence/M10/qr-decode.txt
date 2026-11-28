@@ -1,0 +1,4 @@
+serverlab-sitio-qr.png a 1200 px: decodificado https://serverlab-calculus-simulator.pages.dev/
+serverlab-sitio-qr.png a 240 px: decodificado https://serverlab-calculus-simulator.pages.dev/
+serverlab-sitio-qr.svg a 1200 px: decodificado https://serverlab-calculus-simulator.pages.dev/
+serverlab-sitio-qr.svg a 240 px: decodificado https://serverlab-calculus-simulator.pages.dev/

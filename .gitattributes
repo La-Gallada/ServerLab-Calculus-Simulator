@@ -14,3 +14,6 @@
 *.ttf binary
 *.pdf binary
 *.zip binary
+
+# Los CSV exportados conservan sus finales de línea originales (CRLF).
+docs/academic-delivery/csv/*.csv -text

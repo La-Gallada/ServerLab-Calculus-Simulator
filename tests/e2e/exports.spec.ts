@@ -237,7 +237,7 @@ test('genera las 15 figuras con archivos reales y verificados', async ({ page, c
     const copied = await page.evaluate(() => navigator.clipboard.readText());
     const record = await page.getByRole('textbox', { name: 'Ficha académica' }).inputValue();
     expect(copied.replace(/\r\n/g, '\n')).toBe(record);
-    expect(record).toContain('Elaboración propia mediante ServerLab');
+    expect(record).toContain('Elaboración propia del Grupo #4 mediante ServerLab');
     expect(record).toContain('hipotético');
     const recordName = png.name.replace(/\.png$/, '.txt');
     await mkdir(`${generated}/fichas`, { recursive: true });

@@ -1,3 +1,4 @@
+import { teamName } from '../../config/authorship';
 import { formatValue } from '../format';
 import { themes, type ExportTheme } from '../themes';
 import type {
@@ -435,7 +436,7 @@ export function renderSvg(
   const footer = textElement(
     canvasSize.width - 16,
     canvasSize.height - 10,
-    `ServerLab · modelo hipotético y provisional · ${figure.model.id} (${figure.model.version})`,
+    `ServerLab · ${teamName} · modelo hipotético y provisional · ${figure.model.id} (${figure.model.version})`,
     { size: sizes.footer, fill: theme.muted, anchor: 'end', role: 'footer' },
   );
 

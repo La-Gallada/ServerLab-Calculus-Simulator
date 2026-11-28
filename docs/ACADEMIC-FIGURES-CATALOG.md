@@ -29,3 +29,5 @@ Quince representaciones disponibles en `/#/exportaciones`. El orden y la columna
 - La 1 en vista habitual muestra de 0 a 80 usuarios; una carga mayor se anota como fuera de vista.
 
 Muestras reales: [evidence/M08/generated](evidence/M08/generated).
+
+La selección recomendada para el documento está en la [guía de entrega académica](ACADEMIC-DELIVERY-GUIDE.md); las figuras actuales, con la nota de autoría del Grupo #4, en [academic-delivery](academic-delivery/README.md). Las muestras de M08 son históricas y conservan el texto anterior.

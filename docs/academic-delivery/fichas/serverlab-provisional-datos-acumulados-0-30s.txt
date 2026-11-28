@@ -1,0 +1,24 @@
+Título: Datos acumulados y diferencia A(b) − A(a) en [0 s; 30 s]
+Descripción: Datos acumulados A(t) y la diferencia entre los extremos del intervalo.
+Variables y unidades:
+- t: tiempo transcurrido (s)
+- T(t): tasa de transferencia (MB/s)
+- A(t): datos acumulados desde t = 0 (MB)
+- D(a,b): datos transferidos en [a,b] (MB)
+Parámetros utilizados:
+- Límite inferior a: 0 s
+- Límite superior b: 30 s
+- Datos transferidos D(a,b): 240 MB
+Dominio: 0 ≤ t ≤ 30 s, con 0 ≤ a ≤ b.
+Modelo matemático:
+- T(t) = 5 + 0,2t (MB/s), con 0 ≤ t ≤ 30
+- A(t) = 5t + 0,1t² (MB)
+- D(a,b) = ∫ de a a b de T(t) dt = A(b) − A(a) (MB)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Lineal en ambos ejes, con el eje vertical desde cero.
+Resumen: A(t) pasa de 0 a 240 MB; la diferencia, 240 MB, es lo transferido en [0 s; 30 s].
+
+Nota. Elaboración propia del Grupo #4 mediante ServerLab, a partir del modelo matemático hipotético del proyecto de investigación.
+Autoría: Desarrollado por el Grupo #4. Proyecto de Investigación de Cálculo I. Ingeniería en Sistemas. Universidad Latina de Costa Rica. III Cuatrimestre, 2026.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

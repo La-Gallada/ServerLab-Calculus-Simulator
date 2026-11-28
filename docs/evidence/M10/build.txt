@@ -1,0 +1,41 @@
+> serverlab-calculus-simulator@1.0.0-rc.1 build
+> tsc -b && vite build
+
+vite v8.4.0 building client environment for production...
+transforming...
+✓ 2915 modules transformed.
+rendering chunks...
+computing gzip size...
+dist/index.html                                         2.42 kB │ gzip:   0.83 kB
+dist/assets/Formula-BR5XaBGe.css                       24.98 kB │ gzip:   4.00 kB
+dist/assets/index-CV1FLAZn.css                         48.57 kB │ gzip:   9.68 kB
+dist/assets/chevron-right-CnO-haQP.js                   0.16 kB │ gzip:   0.15 kB
+dist/assets/limitCases-_TsLJAyc.js                      0.21 kB │ gzip:   0.18 kB
+dist/assets/derivativeWindow-3roOFUkU.js                0.22 kB │ gzip:   0.18 kB
+dist/assets/numberInput-LqToaR5t.js                     0.64 kB │ gzip:   0.41 kB
+dist/assets/useDraftNumber-DC5fxo2u.js                  0.65 kB │ gzip:   0.44 kB
+dist/assets/server-cog-Db19_aOl.js                      0.86 kB │ gzip:   0.40 kB
+dist/assets/metadata-Dqnfacud.js                        0.94 kB │ gzip:   0.54 kB
+dist/assets/integralTex-vlVNuclG.js                     1.06 kB │ gzip:   0.57 kB
+dist/assets/ExportDialog-Cza7qnxI.js                    1.15 kB │ gzip:   0.60 kB
+dist/assets/optimizationTex-Cvomw68G.js                 1.53 kB │ gzip:   0.77 kB
+dist/assets/integralFigures-BvlzANxb.js                 1.54 kB │ gzip:   0.78 kB
+dist/assets/About-ChwOA7Mh.js                           3.64 kB │ gzip:   1.52 kB
+dist/assets/ComposedChart-CGHicOVz.js                   3.71 kB │ gzip:   1.80 kB
+dist/assets/optimizationFigures-Dl2iSlI9.js             5.62 kB │ gzip:   2.28 kB
+dist/assets/ExportCenter-B9Xk8VD1.js                    7.78 kB │ gzip:   3.32 kB
+dist/assets/LimitsLab-DRAk0tBa.js                      10.32 kB │ gzip:   3.81 kB
+dist/assets/DerivativesLab-CaE3JDCV.js                 11.48 kB │ gzip:   3.82 kB
+dist/assets/IntegralsLab-nrcXsve2.js                   19.34 kB │ gzip:   6.16 kB
+dist/assets/OptimizationLab-dsPHjgEK.js                33.24 kB │ gzip:  10.24 kB
+dist/assets/ExportPanel-mcLxb28D.js                    45.92 kB │ gzip:  15.65 kB
+dist/assets/Formula-KwNk-7eJ.js                       259.29 kB │ gzip:  77.73 kB
+dist/assets/index-DER8aYXi.js                         734.19 kB │ gzip: 217.22 kB
+
+[plugin builtin:vite-reporter]
+(!) Some chunks are larger than 500 kB after minification. Consider:
+- Using dynamic import() to code-split the application
+- Use build.rolldownOptions.output.codeSplitting to improve chunking: https://rolldown.rs/reference/OutputOptions.codeSplitting
+- Adjust chunk size limit for this warning via build.chunkSizeWarningLimit.
+✓ built in 528ms
+(Líneas de fuentes KaTeX omitidas; ver dist-files.txt.)

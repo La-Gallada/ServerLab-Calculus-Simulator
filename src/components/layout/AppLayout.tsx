@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { useLocation, useNavigationType } from 'react-router';
+import { appVersion, nonEndorsementNotice, teamName } from '../../config/authorship';
 import { pages } from '../../config/pages';
 import { Header } from './Header';
 import { Sidebar } from './Sidebar';
@@ -59,8 +60,14 @@ export function AppLayout({ children }: AppLayoutProps) {
           {children}
         </main>
         <footer className="app-footer">
-          <span>ServerLab v0.1 · Universidad Latina de Costa Rica</span>
-          <span>Modelo hipotético · Cálculo I</span>
+          <span>
+            Desarrollado por el {teamName} · Universidad Latina de Costa Rica ·{' '}
+            {nonEndorsementNotice}
+          </span>
+          <span>
+            Proyecto de Investigación de Cálculo I · Ingeniería en Sistemas · III Cuatrimestre, 2026
+            · Modelo hipotético · v{appVersion}
+          </span>
         </footer>
       </div>
     </div>

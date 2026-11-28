@@ -1,5 +1,6 @@
 import { X } from 'lucide-react';
 import { NavLink } from 'react-router';
+import { teamName } from '../../config/authorship';
 import { pages } from '../../config/pages';
 import { Button } from '../ui/Button';
 
@@ -47,7 +48,7 @@ export function Sidebar({ isOpen, onClose }: SidebarProps) {
           })}
         </ul>
       </nav>
-      <p className="sidebar__course">Cálculo I · Proyecto de Investigación #4</p>
+      <p className="sidebar__course">{teamName} · Proyecto de Investigación de Cálculo I</p>
     </aside>
   );
 }

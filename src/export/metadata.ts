@@ -1,7 +1,7 @@
+import { authorshipLines, teamName } from '../config/authorship';
 import type { ExportFigure } from './types';
 
-export const authorshipNote =
-  'Nota. Elaboración propia mediante ServerLab, a partir del modelo matemático hipotético utilizado en el Proyecto de Investigación #4 de Cálculo I.';
+export const authorshipNote = `Nota. Elaboración propia del ${teamName} mediante ServerLab, a partir del modelo matemático hipotético del proyecto de investigación.`;
 
 export const hypotheticalNotice =
   'Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.';
@@ -26,6 +26,7 @@ export function academicRecord(figure: ExportFigure): string {
     `Resumen: ${figure.summary}`,
     '',
     authorshipNote,
+    `Autoría: ${authorshipLines.join(' ')}`,
     hypotheticalNotice,
   ].join('\n');
 }

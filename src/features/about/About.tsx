@@ -2,6 +2,7 @@ import { Link } from 'react-router';
 import { Card } from '../../components/ui/Card';
 import { Formula } from '../../components/ui/Formula';
 import { capacityUsers, lastOperationalUser, maximumTransferSeconds } from '../../config/domain';
+import { appVersion, authorshipLines, nonEndorsementNotice } from '../../config/authorship';
 import { mathModelConfig } from '../../config/model';
 import { pages } from '../../config/pages';
 import { authorshipNote } from '../../export/metadata';
@@ -36,11 +37,14 @@ export function About() {
 
       <div className="about-grid">
         <Card>
-          <h2>Contexto académico</h2>
+          <h2>Autoría y contexto académico</h2>
+          <p className="about-authorship">
+            {authorshipLines.map((line) => (
+              <span key={line}>{line}</span>
+            ))}
+          </p>
           <p>
-            Producto aplicado del Proyecto de Investigación #4 de Cálculo I, III Cuatrimestre de
-            2026, Universidad Latina de Costa Rica. Esta aplicación no constituye un aval
-            institucional.
+            Producto aplicado del Proyecto de Investigación #4 del curso. {nonEndorsementNotice}
           </p>
           <p>{authorshipNote}</p>
         </Card>
@@ -76,8 +80,8 @@ export function About() {
           <Formula expression={rateTex} label="tasa de transferencia" />
           <p>Tasa en MB/s para 0 ≤ t ≤ {maximumTransferSeconds} s.</p>
           <p>
-            Versión {mathModelConfig.version}. Los parámetros están pendientes de confirmación por
-            el grupo.
+            Aplicación {appVersion} (versión candidata). Modelo {mathModelConfig.version}: los
+            parámetros están pendientes de confirmación por el grupo.
           </p>
         </Card>
 
@@ -88,7 +92,9 @@ export function About() {
             <li>Los resultados no son mediciones ni pruebas de carga.</li>
             <li>No modela CPU, memoria, red, costos ni almacenamiento.</li>
             <li>No tiene servidor, cuentas ni base de datos; todo se calcula en el navegador.</li>
-            <li>Se ha verificado principalmente en navegadores basados en Chromium.</li>
+            <li>
+              Se ha verificado en navegadores basados en Chromium (Chromium y Microsoft Edge).
+            </li>
           </ul>
         </Card>
 

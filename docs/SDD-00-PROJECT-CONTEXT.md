@@ -4,7 +4,7 @@
 
 ServerLab | Calculus Simulator será una aplicación web estática, en español, para explorar un **modelo hipotético** de rendimiento de un servidor web mediante límites, derivadas, integrales y optimización. Es un complemento visual del Proyecto de Investigación #4 de Cálculo I (III Cuatrimestre 2026), no una herramienta de monitoreo ni una fuente de mediciones reales.
 
-Responsable de representaciones gráficas: Christopher Phillips Arroyo. La aplicación debe apoyar el apartado 13 del trabajo académico: mostrar funciones, unidades, comportamiento e interpretación.
+Responsable de representaciones gráficas: Grupo #4. La aplicación debe apoyar el apartado 13 del trabajo académico: mostrar funciones, unidades, comportamiento e interpretación.
 
 ## Alcance aprobado para el producto
 
@@ -28,7 +28,7 @@ src/
     math/              fórmulas KaTeX y procedimientos
   assets/              recursos importados que formen parte del bundle
   test/                pruebas de apoyo
-public/assets/         PNG aprobados para publicación
+public/assets/         archivos publicados (logotipo WebP)
 tests/e2e/             flujos Playwright
 ```
 

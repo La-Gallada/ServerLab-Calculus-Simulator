@@ -1,0 +1,24 @@
+Título: Tasa de transferencia y área bajo la curva en [10 s; 20 s]
+Descripción: Aplicación académica: datos transferidos entre t = 10 s y t = 20 s.
+Variables y unidades:
+- t: tiempo transcurrido (s)
+- T(t): tasa de transferencia (MB/s)
+- A(t): datos acumulados desde t = 0 (MB)
+- D(a,b): datos transferidos en [a,b] (MB)
+Parámetros utilizados:
+- Límite inferior a: 10 s
+- Límite superior b: 20 s
+- Datos transferidos D(a,b): 80 MB
+Dominio: 0 ≤ t ≤ 30 s, con 0 ≤ a ≤ b.
+Modelo matemático:
+- T(t) = 5 + 0,2t (MB/s), con 0 ≤ t ≤ 30
+- A(t) = 5t + 0,1t² (MB)
+- D(a,b) = ∫ de a a b de T(t) dt = A(b) − A(a) (MB)
+Identificador del modelo: serverlab-response-transfer-v1
+Versión del modelo: provisional-2026-11 (provisional)
+Escala gráfica: Lineal en ambos ejes, con el eje vertical desde cero.
+Resumen: La tasa pasa de 7 a 9 MB/s; el área bajo T(t) en [10 s; 20 s] equivale a 80 MB.
+
+Nota. Elaboración propia del Grupo #4 mediante ServerLab, a partir del modelo matemático hipotético del proyecto de investigación.
+Autoría: Desarrollado por el Grupo #4. Proyecto de Investigación de Cálculo I. Ingeniería en Sistemas. Universidad Latina de Costa Rica. III Cuatrimestre, 2026.
+Aclaración: los valores provienen de un modelo hipotético y provisional; no son mediciones de un servidor real.

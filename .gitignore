@@ -9,3 +9,6 @@ test-results/
 .env
 .env.*
 .claude/settings.local.json
+
+# Paquete académico local: el ZIP no se versiona.
+docs/academic-delivery/*.zip

@@ -1,7 +1,8 @@
 {
   "name": "serverlab-calculus-simulator",
   "private": true,
-  "version": "0.1.0",
+  "version": "1.0.0-rc.1",
+  "author": "Grupo #4",
   "type": "module",
   "engines": {
     "node": "^22.22.2 || ^24.15.0 || >=26.0.0",

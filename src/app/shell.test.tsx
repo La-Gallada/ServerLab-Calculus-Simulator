@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, within } from '@testing-library/react';
 import { HashRouter } from 'react-router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { authorshipLines } from '../config/authorship';
 import { App } from './App';
 import { lazyRoute } from './lazyRoute';
 import { RouteBoundary } from './RouteBoundary';
@@ -93,7 +94,7 @@ describe('estructura de la aplicación', () => {
     await screen.findByRole('heading', { name: 'Acerca de ServerLab', level: 1 });
     const main = within(screen.getByRole('main'));
     for (const name of [
-      'Contexto académico',
+      'Autoría y contexto académico',
       'Relación con Ingeniería en Sistemas',
       'Módulos disponibles',
       'Modelo hipotético y provisional',
@@ -106,7 +107,10 @@ describe('estructura de la aplicación', () => {
       '#/exportaciones',
     );
     expect(main.getByText(/No mide, vigila ni administra/)).toBeInTheDocument();
-    expect(document.body).not.toHaveTextContent(/M01|planificado|Phillips/i);
+    for (const line of authorshipLines) expect(main.getByText(line)).toBeInTheDocument();
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('Desarrollado por el Grupo #4');
+    expect(screen.getByRole('contentinfo')).toHaveTextContent('no es un producto oficial');
+    expect(document.body).not.toHaveTextContent(/M01|planificado/i);
   });
 
   it.each(['#/limites', '#/derivadas', '#/integrales', '#/optimizacion'])(

@@ -68,3 +68,11 @@ axe-core 4.14.1 (reglas WCAG 2.0/2.1 A y AA y buenas prácticas) no informa infr
 | S-4 | Baja      | Sin CSP. Producción sólo envía `nosniff` y `referrer-policy`; Cloudflare añade informes NEL a `a.nel.cloudflare.com`                                                                         | PENDING (M10)       |
 
 La privacidad se trata en [PRE-PUSH-REVIEW.md](PRE-PUSH-REVIEW.md).
+
+## Seguimiento en M10
+
+Las tablas anteriores describen el estado al cerrar M09. Cambios posteriores:
+
+- P-4: RESOLVED. Las copias sin uso se retiraron de `public/`; los originales permanecen en `assets/`.
+- S-4: política y encabezados añadidos y probados en local; PENDING su verificación en producción.
+- C-1 y F-2: PENDING, sin cambios.

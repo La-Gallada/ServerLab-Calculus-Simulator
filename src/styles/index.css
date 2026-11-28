@@ -2576,3 +2576,7 @@ main:focus {
   fill: var(--sl-muted) !important;
   font-size: 0.75rem;
 }
+
+.about-authorship span {
+  display: block;
+}

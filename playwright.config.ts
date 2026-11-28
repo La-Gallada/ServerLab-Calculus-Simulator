@@ -13,7 +13,8 @@ export default defineConfig({
   },
   projects: [{ name: 'chromium', use: { ...devices['Desktop Chrome'] } }],
   webServer: {
-    command: 'npm run preview -- --host 127.0.0.1 --port 4173 --strictPort --bypass-lock',
+    // Sirve dist/ aplicando _headers, como hará el hosting estático.
+    command: 'node scripts/serve-dist.mjs --host 127.0.0.1 --port 4173',
     url: 'http://127.0.0.1:4173',
     reuseExistingServer: false,
     timeout: 30_000,
